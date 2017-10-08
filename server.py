@@ -8,6 +8,7 @@ from CustomClass import JSONEncoder
 from flask import jsonify
 import pdb
 
+
 app = Flask(__name__)
 client = MongoClient('mongodb://localhost:27017/')
 database = app.db = client.trip_planner_development
