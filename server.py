@@ -6,10 +6,11 @@ import bcrypt
 import json
 from CustomClass import JSONEncoder
 from flask import jsonify
+import pdb
 
 app = Flask(__name__)
 client = MongoClient('mongodb://localhost:27017/')
-app.db = client.trip_planner_development
+database = app.db = client.trip_planner_development
 app.bcrypt_rounds = 12
 api = Api(app)
 
@@ -19,15 +20,16 @@ class User(Resource):
         requested_json = request.json
         # We have a holder for the json requested data
 
-        collection_of_posts = app.db.posts
+        collection_of_posts = database.posts
 
         '''Now that we have the document we have to check the neccesary document and see if it has the neccesary crede
         ntials '''
 
         if 'username' in requested_json and 'email' in requested_json and 'password' in requested_json:
             collection_of_posts.insert_one(requested_json)
-            print("This document has all the neccesary credentials needed to be implemented")
-            return(collection_of_posts, 200, None)
+            print('The document has been implemented')
+            # pdb.set_trace()
+            return(requested_json, 201, None)
         else:
             print('This document could not be inserted into our database')
             return(None, 404, None)
