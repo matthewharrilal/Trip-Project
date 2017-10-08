@@ -158,6 +158,30 @@ class Trips(Resource):
             print("The document did not contain the email")
             return(None, 404, None)
 
+    def get(self):
+        # This function essentially fetches the resources
+        # Let us get access to the collection first
+        collection_of_trips = database.trips
+
+        # Now that we have the collection we can fetch resources by email
+        trips_email = request.args.get('email')
+
+        # Now that we have the raw value we have to actually see that
+        # it is stored within our database
+        email_find = collection_of_trips.find_one({'email': trips_email})
+
+        # Now that we have the email we can now locate the documents by this method
+        # This is essentially some error handling
+        if email_find is None:
+            print("The document could not be fetched due to no email")
+            return(None, 404, None)
+        else:
+            print('The document was succesfully fetched')
+            return(email_find, 202, None)
+
+
+
+
 
 
 api.add_resource(User, '/users')
