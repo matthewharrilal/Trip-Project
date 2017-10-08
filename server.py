@@ -87,7 +87,6 @@ class User(Resource):
             print('The documents have been edited')
             return(user_query, 200, None)
 
-
     def delete(self):
         # This is essentially the function to delete users and their accounts
         '''We are going to take the collection find the specific email and remove it
@@ -110,6 +109,34 @@ class User(Resource):
             collection_of_posts.remove(user_query)
             print('The user has successfully been deleted')
             return(user_query, 204, None)
+
+    def patch(self):
+        # So essentially this edits the whole doc as oppose to a singularity
+
+        # So first we need to find the document through a unique identifier
+        collection_of_posts = database.posts
+
+        # Now that we have the collection we can now patch the resources
+        # By finding the docs with their unique identifier
+        user_email = request.args.get('email')
+
+        user_username = request.json.get('email')
+        user_username = request.json.get('username')
+        user_password = request.json.get('password')
+        # So now that we have all the neccesary resources we can now patch the docs
+        user_query = collection_of_posts.find_one({'email': user_email})
+
+        # Now we implement the error handling
+        if user_query is None:
+            print('Sorry the document could not be found, therefore could not be patched')
+            return(None, 404, None)
+        else:
+            user_query['email'] = user_email
+            user_query['username'] = user_username
+            user_query['password'] = user_password
+            print('The existing document has succesfully been patched')
+            return(user_query, 200, None)
+
 
 api.add_resource(User, '/users')
 
