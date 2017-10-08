@@ -148,12 +148,20 @@ class Trips(Resource):
         collection_of_trips = database.trips
 
         # Now that we have access to the collection we can begin to post the resources
-        user_email = request.json
+        requested_json = request.json
 
-        if 
+        if 'email' in requested_json:
+            collection_of_trips.insert_one(requested_json)
+            print('The document does have an email address in it')
+            return(requested_json, 201, None)
+        else:
+            print("The document did not contain the email")
+            return(None, 404, None)
+
 
 
 api.add_resource(User, '/users')
+api.add_resource(Trips, '/trips')
 
 @api.representation('application/json')
 def output_json(data, code, headers=None):
