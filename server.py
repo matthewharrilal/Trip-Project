@@ -57,10 +57,35 @@ class User(Resource):
                 return(user_email, 200, None)
 
 
-    # def put(self):
-    #     #  This method is what edits resources
-    #
-    #     # First we need access to these resources
+    def put(self):
+        # This function is what essentially edits the resources
+
+        '''So what we are essentially going to need for the function is
+        the ability to edit resources therefore we need access to the collection'''
+        collection_of_posts = database.posts
+        # Now that we have the collection we can no edit the resources
+
+        # This fetching the documents from mongo
+        user_email = request.args.get('email')
+
+        # This is getting the raw value for the username from the post request
+        user_username = request.json.get('username')
+
+        # Now that we have the two we can common and then from there we can edit the information
+        # We now have to locate the document with the specific problems
+        user_query = collection_of_posts.find_one({'email': user_email})
+        # So now we essentially have access to all the documents with emails in them
+        if user_query is None:
+            '''Some simple user querying to see if the documents we actually
+            are checking contain any information essentially some simple error
+            handling'''
+            print('Invalid documents sorry!')
+            return(None, 404, None)
+        elif user_query is not None:
+            user_query['username'] = user_username
+            collection_of_posts.save(user_query)
+            print('The documents have been edited')
+            return(user_query, 200, None)
 
 
 api.add_resource(User, '/users')
