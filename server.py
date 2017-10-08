@@ -56,8 +56,8 @@ class User(Resource):
             elif user_find is not None:
                 return(user_email, 200, None)
 
-
     def put(self):
+        # This function is what essentially edits the resources
         # This function is what essentially edits the resources
 
         '''So what we are essentially going to need for the function is
@@ -87,6 +87,29 @@ class User(Resource):
             print('The documents have been edited')
             return(user_query, 200, None)
 
+
+    def delete(self):
+        # This is essentially the function to delete users and their accounts
+        '''We are going to take the collection find the specific email and remove it
+        using the remove method'''
+
+        # Therefore first we have to find the document
+        collection_of_posts = database.posts
+
+        # Now let us fetch the email from the database as a unique identifier
+        user_email = request.args.get('email')
+
+        # Now that we have the email we can delete it using a general query
+        user_query = collection_of_posts.find_one({'email': user_email})
+
+        # Now we can delete the resources
+        if user_query is None:
+            print('The user could not be found to be deleted')
+            return(None, 404, None)
+        else:
+            collection_of_posts.remove(user_query)
+            print('The user has successfully been deleted')
+            return(user_query, 204, None)
 
 api.add_resource(User, '/users')
 
