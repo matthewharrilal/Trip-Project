@@ -139,6 +139,20 @@ class User(Resource):
             return(user_query, 200, None)
 
 
+class Trips(Resource):
+    # This is essentially the same as the users class but for the Trips
+    def post(self):
+        # This is essentially going to be able to post resource to our trip collection
+
+        # Now we have to get access to the new collection that we are making
+        collection_of_trips = database.trips
+
+        # Now that we have access to the collection we can begin to post the resources
+        user_email = request.json
+
+        if 
+
+
 api.add_resource(User, '/users')
 
 @api.representation('application/json')
