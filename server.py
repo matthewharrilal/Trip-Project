@@ -177,7 +177,48 @@ class Trips(Resource):
             return(None, 404, None)
         else:
             print('The document was succesfully fetched')
-            return(email_find, 202, None)
+            return(email_find, 200, None)
+
+    def put(self):
+        # This is what essentially edits a singularity in the resources
+        # First we need access to the collection
+        collection_of_trips = database.trips
+
+        # Now that we have that we need access to the database as well as
+        # the changes the user is trying to make
+        trips_email = request.args.get('email')
+
+        # Now that we have that we have to get the json body
+        edited_destination = request.json.get('destination')
+        edited_completed = request.json.get('completed')
+        edited_start_date = request.json.get('start_date')
+        edited_end_date = request.json.get('end_date')
+        edited_waypoint_destination = request.json.get('waypoint_destination')
+        edited_latitude = request.json.get('latitude')
+        edited_longitude = request.json.get('longitude')
+        # Now tat we have accounted for what they want when they edit the
+        # singular resources we can contain the different edge cases
+
+        # Therefore what we need to do now is we have to verify if the document exists
+        trips_email_verification = collection_of_trips.find_one({'email': trips_email})
+
+        # This is where we check if the document even exists
+        if trips_email_verification is None:
+            print('Sorry the document could not be edited')
+            return(None, 404, None)
+        else:
+            '''So essentially since the email has been found in the
+            document we can essentially edit the resources'''
+            trips_email_verification['destination'] = edited_destination
+            trips_email_verification['completed'] = edited_completed
+            trips_email_verification['start_date'] = edited_start_date
+            trips_email_verification['end_date'] = edited_end_date
+            trips_email_verification['waypoint_destination'] = edited_waypoint_destination
+            trips_email_verification['latitude'] = edited_latitude
+            trips_email_verification['longitude'] = edited_longitude
+            collection_of_trips.save(trips_email_verification)
+            print('The document has successfully been edited !')
+            return(trips_email_verification, 200, None)
 
 
 
