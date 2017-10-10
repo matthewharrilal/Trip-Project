@@ -207,20 +207,61 @@ class Trips(Resource):
             print('Sorry the document could not be edited')
             return(None, 404, None)
         else:
-            '''So essentially since the email has been found in the
-            document we can essentially edit the resources'''
-            trips_email_verification['destination'] = edited_destination
-            trips_email_verification['completed'] = edited_completed
-            trips_email_verification['start_date'] = edited_start_date
-            trips_email_verification['end_date'] = edited_end_date
-            trips_email_verification['waypoint_destination'] = edited_waypoint_destination
-            trips_email_verification['latitude'] = edited_latitude
-            trips_email_verification['longitude'] = edited_longitude
-            collection_of_trips.save(trips_email_verification)
-            print('The document has successfully been edited !')
-            return(trips_email_verification, 200, None)
+            # This is where we are saving the resources to our database
+            if edited_destination is None:
+                return
+            else:
+                new_destination = trips_email_verification['destination'] = edited_destination
+                collection_of_trips.save(new_destination)
+                print('The user has edited their destination')
+                return(new_destination, 200, None)
 
+            if edited_completed is None:
+                return
+            else:
+                new_completed = trips_email_verification['completed'] = edited_completed
+                collection_of_trips.save(new_completed)
+                print('The user has edited the completed status of their trip')
+                return(new_completed, 200, None)
 
+            if edited_start_date is None:
+                return
+            else:
+                new_start_date = trips_email_verification['start_date'] = edited_start_date
+                collection_of_trips.save(new_start_date)
+                print('The user has edited the start date of their trip')
+                return(new_start_date, 200, None)
+
+            if edited_end_date is None:
+                return
+            else:
+                new_end_date = trips_email_verification['end_date'] = edited_end_date
+                collection_of_trips.save(new_end_date)
+                print('The user has edited the end date for their trip')
+                return(new_end_date, 200, None)
+
+            if edited_waypoint_destination is None:
+                return
+            else:
+                new_waypoint_destination = trips_email_verification['waypoint_destination']
+                collection_of_trips.save(new_waypoint_destination)
+                print('The user has edited their waypoint destination')
+                return(new_waypoint_destination, 200, None)
+
+            if edited_latitude is None:
+                return
+            else:
+                new_latitude = trips_email_verification['latitude'] = edited_latitude
+                collection_of_trips.save(new_latitude)
+                print('The user has editied their latitude')
+                return(new_latitude, 200, None)
+            if edited_longitude is None:
+                return
+            else:
+                new_longitude = trips_email_verification['longitude'] = edited_longitude
+                collection_of_trips.save(new_longitude)
+                print('The user has edited their longitude')
+                return(new_longitude, 200, None)
 
 
 
