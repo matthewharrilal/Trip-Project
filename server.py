@@ -183,6 +183,26 @@ class Trips(Resource):
             print('The document was succesfully fetched')
             return(email_find, 200, None)
 
+    def delete(self):
+        # This function will essentially delete resources
+        # First we need access to the collection
+        collection_of_trips = database.trips
+
+        # Then we have to find which document in our database that we have to delete
+        requested_email = request.args.get('email')
+
+        # Now that we have the email we have to find the document in our database
+        trips_email = collection_of_trips.find_one({'email': requested_email})
+
+        # Now that we are in the proccess of finding it we have to confirm if the document actually exists
+        if trips_email is None:
+            print('The document you are trying to delete does not exist')
+            return(None, 404, None)
+        else:
+            removed_trip = collection_of_trips.remove(trips_email)
+            print('The trip has been removed')
+            return(removed_trip, 204, None)
+
     def put(self):
         # This is what essentially edits a singularity in the resources
         # First we need access to the collection
