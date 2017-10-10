@@ -53,9 +53,11 @@ class User(Resource):
             # Now we have to do some error handling
             if user_find is None:
                 print('Sorry the user can not be found')
-                return(None, 204,None)
+                return(None, 404,None)
             elif user_find is not None:
-                return(user_email, 200, None)
+                return(user_find, 200, None)
+                '''The difference between returning user email and user find is that if we just return user email when we get back the json object
+                from our database we literally just get back the email but if we were to use user find we can get back the whole document'''
 
     def put(self):
         # This function is what essentially edits the resources
@@ -124,6 +126,7 @@ class User(Resource):
         user_username = request.json.get('email')
         user_username = request.json.get('username')
         user_password = request.json.get('password')
+        edited_user_email = request.json.get('email')
         # So now that we have all the neccesary resources we can now patch the docs
         user_query = collection_of_posts.find_one({'email': user_email})
 
@@ -132,9 +135,10 @@ class User(Resource):
             print('Sorry the document could not be found, therefore could not be patched')
             return(None, 404, None)
         else:
-            user_query['email'] = user_email
+            user_query['email'] = edited_user_email
             user_query['username'] = user_username
             user_query['password'] = user_password
+            collection_of_posts.save(user_query)
             print('The existing document has succesfully been patched')
             return(user_query, 200, None)
 
