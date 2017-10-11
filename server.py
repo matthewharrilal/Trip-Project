@@ -216,13 +216,20 @@ class Trips(Resource):
 
         # First we have to find the document they want to edit
         requested_email = request.args.get('email')
-        searched_email = collection_of_trips.find_one({'email': requested_email})
+        trips_query = collection_of_trips.find_one({'email': requested_email})
 
         #  We have to take the edited information from the json body they are sending
         # But first we want to recieve the json as a whole
         requested_json = request.json
+        new_destination = request.json.get('destination')
+        new_completed = request.json.get('completed')
+        new_start_date = request.json.get('start_date')
+        new_end_date = request.json.get('end_date')
+        new_waypoint_destination = request.json.get('waypoint_destination')
+        new_latitude = request.json.get('latitude')
+        new_longitude = request.json.get('longitude')
         # Now that we have seached for the email we have to check if it exists or not
-        if searched_email is None:
+        if trips_query is None:
             print('Couldnot find the document the user is trying to edit')
             return(None, 404, None)
         else:
@@ -230,7 +237,17 @@ class Trips(Resource):
                 print('User has tried to send back trip parameters that do not exist!')
                 return(None, 403, None)
             else:
-                
+                trips_query['destination'] = new_destination
+                trips_query['completed'] = new_completed
+                trips_query['start_date'] = new_start_date
+                trips_query['end_date'] = new_end_date
+                trips_query['waypoint_destination'] = new_waypoint_destination
+                trips_query['latitude'] = new_longitude
+                trips_query['longitude'] = new_longitude
+                collection_of_trips.save(trips_query)
+                print('The changes to the trip has been changed')
+                return(trips_query, 200, None)
+
 
 
 
