@@ -204,88 +204,31 @@ class Trips(Resource):
             return(removed_trip, 204, None)
 
     def put(self):
-        # This is what essentially edits a singularity in the resources
-        # First we need access to the collection
+        '''Essentially what this function will do is that it will allow us to be able to edit resources in our document
+        however since when a put request is made all the data gets sent back with it therefore what we have to do is that we
+        have to whenever the user makes a put request make sure they are editing everything about the trip except their identifier
+        which is the email'''
+
+        # first things first we have to get access to the collection
         collection_of_trips = database.trips
 
-        # Now that we have that we need access to the database as well as
-        # the changes the user is trying to make
-        trips_email = request.args.get('email')
+        # So now that we have the collection we can now specify what the user has to do make a succesfull put request
 
-        # Now that we have that we have to get the json body
-        edited_destination = request.json.get('destination')
-        edited_completed = request.json.get('completed')
-        edited_start_date = request.json.get('start_date')
-        edited_end_date = request.json.get('end_date')
-        edited_waypoint_destination = request.json.get('waypoint_destination')
-        edited_latitude = request.json.get('latitude')
-        edited_longitude = request.json.get('longitude')
-        # Now tat we have accounted for what they want when they edit the
-        # singular resources we can contain the different edge cases
+        # First we have to find the document they want to edit
+        requested_email = request.args.get('email')
+        searched_email = collection_of_trips.find_one({'email': requested_email})
 
-        # Therefore what we need to do now is we have to verify if the document exists
-        trips_email_verification = collection_of_trips.find_one({'email': trips_email})
-
-        # This is where we check if the document even exists
-        if trips_email_verification is None:
-            print('Sorry the document could not be edited')
+        #  We have to take the edited information from the json body they are sending
+        # But first we want to recieve the json as a whole
+        requested_json = request.json
+        # Now that we have seached for the email we have to check if it exists or not
+        if searched_email is None:
+            print('Couldnot find the document the user is trying to edit')
             return(None, 404, None)
         else:
-            # This is where we are saving the resources to our database
-            if edited_destination is None:
-                return
-            else:
-                new_destination = trips_email_verification['destination'] = edited_destination
-                collection_of_trips.save(new_destination)
-                print('The user has edited their destination')
-                return(new_destination, 200, None)
+            if 'destination' and 'completed' and 'start_date' not in requested_json:
+                pass
 
-            if edited_completed is None:
-                return
-            else:
-                new_completed = trips_email_verification['completed'] = edited_completed
-                collection_of_trips.save(new_completed)
-                print('The user has edited the completed status of their trip')
-                return(new_completed, 200, None)
-
-            if edited_start_date is None:
-                return
-            else:
-                new_start_date = trips_email_verification['start_date'] = edited_start_date
-                collection_of_trips.save(new_start_date)
-                print('The user has edited the start date of their trip')
-                return(new_start_date, 200, None)
-
-            if edited_end_date is None:
-                return
-            else:
-                new_end_date = trips_email_verification['end_date'] = edited_end_date
-                collection_of_trips.save(new_end_date)
-                print('The user has edited the end date for their trip')
-                return(new_end_date, 200, None)
-
-            if edited_waypoint_destination is None:
-                return
-            else:
-                new_waypoint_destination = trips_email_verification['waypoint_destination']
-                collection_of_trips.save(new_waypoint_destination)
-                print('The user has edited their waypoint destination')
-                return(new_waypoint_destination, 200, None)
-
-            if edited_latitude is None:
-                return
-            else:
-                new_latitude = trips_email_verification['latitude'] = edited_latitude
-                collection_of_trips.save(new_latitude)
-                print('The user has editied their latitude')
-                return(new_latitude, 200, None)
-            if edited_longitude is None:
-                return
-            else:
-                new_longitude = trips_email_verification['longitude'] = edited_longitude
-                collection_of_trips.save(new_longitude)
-                print('The user has edited their longitude')
-                return(new_longitude, 200, None)
 
 
 
