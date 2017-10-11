@@ -246,6 +246,10 @@ class Trips(Resource):
                 print('The changes to the trip has been saved')
                 return(trips_query, 200, None)
 
+    def patch(self):
+        # This is essentially the function where we patch resources
+        # First things first we need access to the collection
+
 
 api.add_resource(User, '/users')
 api.add_resource(Trips, '/trips')
