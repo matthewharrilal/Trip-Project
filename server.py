@@ -226,8 +226,13 @@ class Trips(Resource):
             print('Couldnot find the document the user is trying to edit')
             return(None, 404, None)
         else:
-            if 'destination' and 'completed' and 'start_date' not in requested_json:
-                pass
+            if 'destination' and 'completed' and 'start_date' and 'end_date' and 'waypoint_destination' and 'latitude' and 'longitude' not in requested_json:
+                print('User has tried to send back trip parameters that do not exist!')
+                return(None, 403, None)
+            else:
+                
+
+
 
 
 
