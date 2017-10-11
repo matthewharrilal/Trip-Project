@@ -12,7 +12,7 @@ import pdb
 app = Flask(__name__)
 client = MongoClient('mongodb://localhost:27017/')
 database = app.db = client.trip_planner_development
-app.bcrypt_rounds = 12
+rounds = app.bcrypt_rounds = 5
 api = Api(app)
 
 
@@ -26,8 +26,26 @@ class User(Resource):
         '''Now that we have the document we have to check the neccesary document and see if it has the neccesary crede
         ntials '''
 
+        # So essentially we are going to send the passwords hashed to the database
+        # First we have to declare how many times we want to run the encryption algorithm therefore we choose five
+        # We have declared the number of rounds above
+
+        # Essentially from there what we do is we take the password in the requested.json and then from there we can encode
+        # password in plain text
+        # But first we need the password from the json data
+        user_password = requested_json.get('password')
+        encoded_password = user_password.encode('utf-8')
+        hashed = bcrypt.hashpw(encoded_password, bcrypt.gensalt(rounds))
+        requested_json['password'] = hashed
+
+
+        print(hashed)
+        # So it is hashing the password therefore we have to find a way to insert this as the password instead of reg string as the password
+
         if 'username' in requested_json and 'email' in requested_json and 'password' in requested_json:
             collection_of_posts.insert_one(requested_json)
+            requested_json.pop('password')
+
             print('The document has been implemented')
             # pdb.set_trace()
             return(requested_json, 201, None)
@@ -246,7 +264,7 @@ class Trips(Resource):
                 print('The changes to the trip has been saved')
                 return(trips_query, 200, None)
 
-    def patch(self):
+    # def patch(self):
         # This is essentially the function where we patch resources
         # First things first we need access to the collection
 
