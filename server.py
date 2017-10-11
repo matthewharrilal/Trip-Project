@@ -138,7 +138,7 @@ class User(Resource):
             user_query['email'] = edited_user_email
             user_query['username'] = user_username
             user_query['password'] = user_password
-            collection_of_posts.save(user_query)
+            collection_of_posts.put(user_query)
             print('The existing document has succesfully been patched')
             return(user_query, 200, None)
 
@@ -233,26 +233,34 @@ class Trips(Resource):
             print('Couldnot find the document the user is trying to edit')
             return(None, 404, None)
         else:
-            if 'destination' and 'completed' and 'start_date' and 'end_date' and 'waypoint_destination' and 'latitude' and 'longitude' not in requested_json:
-                print('User has tried to send back trip parameters that do not exist!')
-                return(None, 403, None)
-            else:
-                trips_query['destination'] = new_destination
-                trips_query['completed'] = new_completed
-                trips_query['start_date'] = new_start_date
-                trips_query['end_date'] = new_end_date
-                trips_query['waypoint_destination'] = new_waypoint_destination
-                trips_query['latitude'] = new_longitude
-                trips_query['longitude'] = new_longitude
+            # if 'destination' and 'completed' and 'start_date' and 'end_date' and 'waypoint_destination' and 'latitude' and 'longitude' not in requested_json:
+            #     print('User has tried to send back trip parameters that do not exist!')
+            #     return(None, 403, None)
+            # else:
+
+                # Essentially the problem we are facing is the way we are sttucturing it since there are dictionaries we have
+                # to account for that using the same structure we use as it is nested in our mongo database
+                # trips_query['email'] = new_email
+                # trips_query['destination'] = new_destination
+                # trips_query['completed'] = new_completed
+                # trips_query['start_date'] = new_start_date
+                # trips_query['end_date'] = new_end_date
+                # trips_query['waypoint_destination'] = new_waypoint_destination
+                # trips_query['latitude'] = new_longitude
+                # trips_query['longitude'] = new_longitude
+                # collection_of_trips.save(trips_query)
+                # print('The changes to the trip has been changed')
+                # return(trips_query, 200, None)
+                trips_query['trips']['destination'] = new_destination
+                trips_query['trips']['completed'] = new_completed
+                trips_query['trips']['start_date'] = new_start_date
+                trips_query['trips']['end_date'] = new_end_date
+                trips_query['trips']['waypoint']['waypoint_destination'] = new_waypoint_destination
+                trips_query['trips']['waypoint']['location']['latitude'] = new_latitude
+                trips_query['trips']['waypoint']['location']['longitude'] = new_longitude
                 collection_of_trips.save(trips_query)
-                print('The changes to the trip has been changed')
+                print('The changes to the trip has been saved')
                 return(trips_query, 200, None)
-
-
-
-
-
-
 
 
 api.add_resource(User, '/users')
