@@ -62,21 +62,37 @@ class User(Resource):
             #  We have to get the arguments of the users credentialls
 
             user_email = request.args.get('email')
+            user_password = request.args.get('password')
         # And the reason that we have to use get because it is getting the raw value  for the string
+
+            # So essentially what we have to do now is that we have to
+            # figure out a way to extract that data back into the plain text
+            # back into a plain text
+
+            # So we have access to the collection now
+            # And we also have access to finding the document
 
 
             # since then emails are unique we will use them as our fetching tool
             user_find = collection_of_posts.find_one({"email": user_email})
 
-            # Now we have to do some error handling
-            if user_find is None:
-                print('Sorry the user can not be found')
-                return(None, 404,None)
-            elif user_find is not None:
+            # # Now we have to do some error handling
+            # if user_find is None:
+            #     print('Sorry the user can not be found')
+            #     return(None, 404,None)
+            # elif user_find is not None:
+            #     return(user_find, 200, None)
+            #     '''The difference between returning user email and user find is that if we just return user email when we get back the json object
+            #     from our database we literally just get back the email but if we were to use user find we can get back the whole document'''
+            '''So essentially the error handling that we are doing now compared to the error
+            handling we  have above is more solid because now we are essentially making our client which is password
+            we are essentially making it we can only retrieve the results if the passwords math'''
+            if bcrypt.hashpw(user_password, user_find['password']) == user_find['password']:
+                print('The user has successfully signed in')
                 return(user_find, 200, None)
-                '''The difference between returning user email and user find is that if we just return user email when we get back the json object
-                from our database we literally just get back the email but if we were to use user find we can get back the whole document'''
-
+            else:
+                print('The user can not be found')
+                return(None, 404, None)
     def put(self):
         # This function is what essentially edits the resources
         # This function is what essentially edits the resources
