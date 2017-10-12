@@ -36,7 +36,7 @@ class User(Resource):
         user_password = requested_json.get('password')
         encoded_password = user_password.encode('utf-8')
         hashed = bcrypt.hashpw(encoded_password, bcrypt.gensalt(rounds))
-        requested_json['password'] = hashed
+        requested_json['password'] = str(hashed)
 
 
         print(hashed)
