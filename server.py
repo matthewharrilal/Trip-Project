@@ -36,7 +36,7 @@ class User(Resource):
         user_password = requested_json.get('password')
         encoded_password = user_password.encode('utf-8')
         hashed = bcrypt.hashpw(encoded_password, bcrypt.gensalt(rounds))
-        requested_json['password'] = str(hashed)
+        requested_json['password'] = hashed
 
 
         print(hashed)
@@ -75,6 +75,7 @@ class User(Resource):
 
             # since then emails are unique we will use them as our fetching tool
             user_find = collection_of_posts.find_one({"email": user_email})
+            encoded_password = user_password.encode('utf-8')
 
             # # Now we have to do some error handling
             # if user_find is None:
@@ -87,7 +88,8 @@ class User(Resource):
             '''So essentially the error handling that we are doing now compared to the error
             handling we  have above is more solid because now we are essentially making our client which is password
             we are essentially making it we can only retrieve the results if the passwords math'''
-            if bcrypt.hashpw(user_password, user_find['password']) == user_find['password']:
+            if bcrypt.hashpw(encoded_password, user_find['password']) == user_find['password']:
+                user_find.pop('password')
                 print('The user has successfully signed in')
                 return(user_find, 200, None)
             else:
