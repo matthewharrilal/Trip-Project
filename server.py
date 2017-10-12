@@ -133,20 +133,24 @@ class User(Resource):
 
         # Therefore first we have to find the document
         collection_of_posts = database.posts
+        # Since we are deleting the user we have to delete the trips that correspond to the email
 
+        collection_of_trips = database.trips
         # Now let us fetch the email from the database as a unique identifier
         user_email = request.args.get('email')
 
         # Now that we have the email we can delete it using a general query
         user_query = collection_of_posts.find_one({'email': user_email})
+        trips_query = collection_of_trips.find_one({'email': user_email})
 
         # Now we can delete the resources
-        if user_query is None:
+        if user_query is None and trips_query is None:
             print('The user could not be found to be deleted')
             return(None, 404, None)
         else:
             collection_of_posts.remove(user_query)
-            print('The user has successfully been deleted')
+            collection_of_trips.remove(trips_query)
+            print('The user and their trips have successfully been deleted')
             return(user_query, 204, None)
 
     def patch(self):
