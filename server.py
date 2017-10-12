@@ -20,7 +20,7 @@ class User(Resource):
     def post(self):
         requested_json = request.json
         # We have a holder for the json requested data
-
+        # We also need the data that the user essentially wants us to send back
         collection_of_posts = database.posts
 
         '''Now that we have the document we have to check the neccesary document and see if it has the neccesary crede
