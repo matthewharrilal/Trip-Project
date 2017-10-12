@@ -88,13 +88,13 @@ class User(Resource):
             '''So essentially the error handling that we are doing now compared to the error
             handling we  have above is more solid because now we are essentially making our client which is password
             we are essentially making it we can only retrieve the results if the passwords math'''
-            if bcrypt.hashpw(encoded_password, user_find['password']) == user_find['password']:
+            if bcrypt.checkpw(encoded_password, user_find['password']):
                 user_find.pop('password')
                 print('The user has successfully signed in')
                 return(user_find, 200, None)
             else:
                 print('The user can not be found')
-                return(None, 404, None)
+                return(None, 401, None)
     def put(self):
         # This function is what essentially edits the resources
         # This function is what essentially edits the resources
