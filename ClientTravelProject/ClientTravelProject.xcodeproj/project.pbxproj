@@ -8,12 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		1C4EE3E71F9074BB009E6E00 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C4EE3E61F9074BB009E6E00 /* AppDelegate.swift */; };
-		1C4EE3E91F9074BB009E6E00 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C4EE3E81F9074BB009E6E00 /* ViewController.swift */; };
+		1C4EE3E91F9074BB009E6E00 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C4EE3E81F9074BB009E6E00 /* LogInViewController.swift */; };
 		1C4EE3EC1F9074BB009E6E00 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C4EE3EA1F9074BB009E6E00 /* Main.storyboard */; };
 		1C4EE3EE1F9074BB009E6E00 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1C4EE3ED1F9074BB009E6E00 /* Assets.xcassets */; };
 		1C4EE3F11F9074BB009E6E00 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C4EE3EF1F9074BB009E6E00 /* LaunchScreen.storyboard */; };
 		1C4EE3FC1F9074BB009E6E00 /* ClientTravelProjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C4EE3FB1F9074BB009E6E00 /* ClientTravelProjectTests.swift */; };
 		1C4EE4071F9074BB009E6E00 /* ClientTravelProjectUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C4EE4061F9074BB009E6E00 /* ClientTravelProjectUITests.swift */; };
+		1C4EE4151F9078CE009E6E00 /* NetworkingLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C4EE4141F9078CE009E6E00 /* NetworkingLayer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,7 +37,7 @@
 /* Begin PBXFileReference section */
 		1C4EE3E31F9074BB009E6E00 /* ClientTravelProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ClientTravelProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1C4EE3E61F9074BB009E6E00 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		1C4EE3E81F9074BB009E6E00 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		1C4EE3E81F9074BB009E6E00 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		1C4EE3EB1F9074BB009E6E00 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1C4EE3ED1F9074BB009E6E00 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1C4EE3F01F9074BB009E6E00 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -47,6 +48,7 @@
 		1C4EE4021F9074BB009E6E00 /* ClientTravelProjectUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ClientTravelProjectUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1C4EE4061F9074BB009E6E00 /* ClientTravelProjectUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientTravelProjectUITests.swift; sourceTree = "<group>"; };
 		1C4EE4081F9074BB009E6E00 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1C4EE4141F9078CE009E6E00 /* NetworkingLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingLayer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,7 +100,8 @@
 			isa = PBXGroup;
 			children = (
 				1C4EE3E61F9074BB009E6E00 /* AppDelegate.swift */,
-				1C4EE3E81F9074BB009E6E00 /* ViewController.swift */,
+				1C4EE3E81F9074BB009E6E00 /* LogInViewController.swift */,
+				1C4EE4141F9078CE009E6E00 /* NetworkingLayer.swift */,
 				1C4EE3EA1F9074BB009E6E00 /* Main.storyboard */,
 				1C4EE3ED1F9074BB009E6E00 /* Assets.xcassets */,
 				1C4EE3EF1F9074BB009E6E00 /* LaunchScreen.storyboard */,
@@ -259,7 +262,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1C4EE3E91F9074BB009E6E00 /* ViewController.swift in Sources */,
+				1C4EE3E91F9074BB009E6E00 /* LogInViewController.swift in Sources */,
+				1C4EE4151F9078CE009E6E00 /* NetworkingLayer.swift in Sources */,
 				1C4EE3E71F9074BB009E6E00 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
