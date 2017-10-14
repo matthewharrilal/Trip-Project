@@ -189,24 +189,32 @@ class Trips(Resource):
     # This is essentially the same as the users class but for the Trips
     def post(self):
 
-        # user_password = requested_json.get('password')
-        # encoded_password = user_password.encode('utf-8')
-        # hashed = bcrypt.hashpw(encoded_password, bcrypt.gensalt(rounds))
-        # requested_json['password'] = hashed
-
+        '''So essentially the plan for this function is going to be essentially to post resources but befroe that can even happen
+        we have to enure that the user is logged in because then that defies the purpose of posting resources '''
         # This is essentially going to be able to post resource to our trip collection
 
         # Now we have to get access to the new collection that we are making
         collection_of_trips = database.trips
 
+        # We also need access to the other collection and to do that we need to make a reference
+        collection_of_posts = database.posts
+
         # Now that we have access to the collection we can begin to post the resources
         requested_json = request.json
+
+        # So now we need access to the password and the email in the parmaeters that the network request consists of
+        user_email = request.args.get('email')
+        user_password = request.args.get('password')
+
+        encoded_password = user_password.encode('utf-8')
+
+        user_account_find = collection_of_posts.find_one({'email': user_email})
 
         '''So essentially the plan is for us to encode the data and what we have to do is that we have to
         even when the user is posting their trips even though we are not passing in the password what we can essentially do
         is that we can still use that we are making a get request'''
 
-        if 'email' in requested_json:
+        if 'email' in requested_json and bcrypt.checkpw(encoded_password, user_account_find['password']):
             collection_of_trips.insert_one(requested_json)
             print('The document does have an email address in it')
             return(requested_json, 201, None)
