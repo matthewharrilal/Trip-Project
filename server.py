@@ -290,6 +290,16 @@ class Trips(Resource):
         # This is essentially the function where we patch resources
         # First things first we need access to the collection
 
+def authenticated_request(func):
+    def wrapper(*args, **kwargs):
+        auth = request.authorization
+
+        if not auth or not validate_auth(auth.username, auth.password):
+            return ({'error': 'Basic Auth Required.'}, 401, None)
+
+        return func(*args, **kwargs)
+
+    return wrapper
 
 api.add_resource(User, '/users')
 api.add_resource(Trips, '/trips')
