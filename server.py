@@ -93,7 +93,7 @@ class User(Resource):
                 print('The user has successfully signed in')
                 return(user_find, 200, None)
             else:
-                print('The user can not be found')
+                print('The user cannot be found')
                 return(None, 401, None)
     def put(self):
         # This function is what essentially edits the resources

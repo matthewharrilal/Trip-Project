@@ -9,6 +9,11 @@
 import Foundation
 import UIKit
 
+
+//Essentially we have to model the code and take the neccesary components from there
+
+
+
 class Singleton {
     //    Essentially what this class will be doing is providing one use of the session therefore we can easily pass this aroundn when we are making network requests
     static let session = URLSession.shared
@@ -52,18 +57,10 @@ enum Route {
 }
 
 // This is our error handling and this determines whether the user could log in or not
-enum NetworkError:Error {
-    case unknown
-    case couldNotParseJSON
-}
-
-enum Result<T> {
-    case success(T)
-    case failure(NetworkError)
-}
 
 
-class Network {
+
+class UsersNetworkingLayer {
     //    We shall be performing our network requests in this class
     
     var baseURL = "http://127.0.0.1:5000"
@@ -75,9 +72,10 @@ class Network {
         
         var getRequest = URLRequest(url: fullUrlString!)
         getRequest.httpMethod = "GET"
-        Singleton.session.dataTask(with: getRequest) { (data, response, errpr) in
+        Singleton.session.dataTask(with: getRequest) { (data, response, error) in
+            
             if let data = data {
-             completionHandler(data)
+           completionHandler(data)
             }
             
         }.resume()
