@@ -58,6 +58,8 @@ class User(Resource):
             # So we need access to the database and collection_
             collection_of_posts = app.db.posts
 
+            # Let us get access to our other collection to return all the data all at once
+
             # Now that we have the collection lets fetch some resources
             #  We have to get the arguments of the users credentialls
 
@@ -186,6 +188,12 @@ class User(Resource):
 class Trips(Resource):
     # This is essentially the same as the users class but for the Trips
     def post(self):
+
+        # user_password = requested_json.get('password')
+        # encoded_password = user_password.encode('utf-8')
+        # hashed = bcrypt.hashpw(encoded_password, bcrypt.gensalt(rounds))
+        # requested_json['password'] = hashed
+
         # This is essentially going to be able to post resource to our trip collection
 
         # Now we have to get access to the new collection that we are making
@@ -193,6 +201,10 @@ class Trips(Resource):
 
         # Now that we have access to the collection we can begin to post the resources
         requested_json = request.json
+
+        '''So essentially the plan is for us to encode the data and what we have to do is that we have to
+        even when the user is posting their trips even though we are not passing in the password what we can essentially do
+        is that we can still use that we are making a get request'''
 
         if 'email' in requested_json:
             collection_of_trips.insert_one(requested_json)
@@ -206,22 +218,26 @@ class Trips(Resource):
         # This function essentially fetches the resources
         # Let us get access to the collection first
         collection_of_trips = database.trips
-
+        collection_of_posts = database.posts
         # Now that we have the collection we can fetch resources by email
         trips_email = request.args.get('email')
+
+        # Remember we are focusing on the parameters becuase they can only fetch if they are logged in
+        user_password = request.args.get('password')
+
+        encoded_password = user_password.encode('utf-8')
 
         # Now that we have the raw value we have to actually see that
         # it is stored within our database
         email_find = collection_of_trips.find_one({'email': trips_email})
+        user_password_find = collection_of_posts.find_one({'email': trips_email})
 
-        # Now that we have the email we can now locate the documents by this method
-        # This is essentially some error handling
-        if email_find is None:
-            print("The document could not be fetched due to no email")
-            return(None, 404, None)
-        else:
-            print('The document was succesfully fetched')
+        if bcrypt.checkpw(encoded_password, user_password_find['password']):
+            print("The user succesfully fetched their trips")
             return(email_find, 200, None)
+        else:
+            print('The trips can not be found')
+            return(None, 401, None)
 
     def delete(self):
         # This function will essentially delete resources
@@ -251,7 +267,7 @@ class Trips(Resource):
 
         # first things first we have to get access to the collection
         collection_of_trips = database.trips
-        print ("here are the trips: " + str(collection_of_trips.find()))
+        print ("here are 'the trips': " + str(collection_of_trips.find()))
 
         # So now that we have the collection we can now specify what the user has to do make a succesfull put request
 
@@ -290,6 +306,8 @@ class Trips(Resource):
         # This is essentially the function where we patch resources
         # First things first we need access to the collection
 
+
+# This is essentially our decorator and what we are doing here is that we are basically self contained blocks of code that we can pass around
 def authenticated_request(func):
     def wrapper(*args, **kwargs):
         auth = request.authorization
