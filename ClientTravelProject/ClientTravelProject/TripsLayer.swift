@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 
 struct Trips {
+//    What we are essentially doing here is that we are saying that
     let email: String?
     let completed: Bool
     let destination:String?
