@@ -55,11 +55,16 @@ enum Route {
     }
     
     func urlHeaders() -> [String: String] {
-        let date = Date()
-        var urlHeaders = ["Content-Type": "application/json",
-                          "Content-Length": "104",
+        let realDate = Date()
+        let date = DateFormatter()
+        date.dateFormat = "hh:mm:ss"
+        var formattedDate = date
+        let todaysDate = formattedDate.string(from: realDate)
+        let appendedDate = "Sun, 15 Oct 2017 \(todaysDate) GMT"
+        var urlHeaders = ["Content-Length": "104",
+                           "Content-Type": "application/json",
                           "Server": "Werkzeug/0.12.2 Python/3.6.2",
-                          "Date": "Sun, 15 Oct 2017 07:11:52 GMT"]
+                          "Date": appendedDate]
         return urlHeaders
     }
 }

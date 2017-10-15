@@ -37,17 +37,9 @@ class LogInViewController: UIViewController {
 //            }
 //
 //            }
+            print(self.httpResponse)
             print("")
-            print("")
-            print("")
-            print("")
-            print(self.httpResponse.statusCode)
-            let realDate = Date()
-            let date = DateFormatter()
-            date1 = date.dateFormat = "hh:mm:ss "
-            let appenededDate = "Sun, 15 Oct 2017 \(date1) GMT"
-           let dateTime = appenededDate.string(from: realDate)
-            print(dateTime)
+            print(data)
             if self.httpResponse.statusCode == 200 {
             let users = try? JSONDecoder().decode(Users.self, from: data)
             print(users)
