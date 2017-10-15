@@ -275,13 +275,19 @@ class Trips(Resource):
 
         # first things first we have to get access to the collection
         collection_of_trips = database.trips
-        print ("here are 'the trips': " + str(collection_of_trips.find()))
 
+        # We are also going to need access to our other collection therefore a reference is in order
+        collection_of_posts = database.posts
         # So now that we have the collection we can now specify what the user has to do make a succesfull put request
 
         # First we have to find the document they want to edit
         requested_email = request.args.get('email')
         trips_query = collection_of_trips.find_one({'email': requested_email})
+
+        requested_password = request.args.get('password')
+        encoded_password = requested_password.encode('utf-8')
+
+        user_account_find = collection_of_posts.find_one({'email': requested_email})
 
         #  We have to take the edited information from the json body they are sending
         print ("request json is: " + str(request.json))
@@ -294,10 +300,10 @@ class Trips(Resource):
         new_latitude = request.json['trips']['waypoint']['location']['latitude']
         new_longitude = request.json['trips']['waypoint']['location']['latitude']
         # Now that we have seached for the email we have to check if it exists or not
-        if trips_query is None:
-            print('Couldnot find the document the user is trying to edit')
-            return(None, 404, None)
-        else:
+        # if trips_query is None:
+        #     print('Couldnot find the document the user is trying to edit')
+        #     return(None, 404, None)
+        if trips_query is not None and bcrypt.checkpw(encoded_password, user_account_find['password']):
             # So essentially this is the part where we save the changes to our database
                 trips_query['trips']['destination'] = new_destination
                 trips_query['trips']['completed'] = new_completed
@@ -309,6 +315,10 @@ class Trips(Resource):
                 collection_of_trips.save(trips_query)
                 print('The changes to the trip has been saved')
                 return(trips_query, 200, None)
+        else:
+
+            print('Couldnot find the document the user is trying to edit')
+            return(None, 404, None)
 
     # def patch(self):
         # This is essentially the function where we patch resources
