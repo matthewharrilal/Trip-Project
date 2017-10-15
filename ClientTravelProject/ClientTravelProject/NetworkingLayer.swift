@@ -44,7 +44,7 @@ enum Route {
         switch self {
         case .users(let email, let password):
             var userParameters = ["email": String(email),
-                                  "password": String(password)]
+                                  "password": "\(password)"]
             return userParameters
         case .trips(let email):
             var tripsParameters = ["email": String(email)]
@@ -65,6 +65,11 @@ enum HttpsStatusCodes: Int {
     case accepted = 202
     case noContent = 204
     case badRequest = 400
+    case unauthorized = 401
+    case forbidden = 403
+    case notFound = 404
+    case methodNotAllowed = 405
+    case internalServerError = 500
 }
 
 
@@ -75,18 +80,22 @@ class UsersNetworkingLayer {
     
 //    This is the function that determines the path that we are going to be taking the course of
     func fetch(route: Route, completionHandler: @escaping (Data) -> Void) {
-        let fullUrlString = URL(string: baseURL.appending(route.path()))
-        fullUrlString?.appendingQueryParameters(route.urlParameters())
+        var fullUrlString = URL(string: baseURL.appending(route.path()))
+        print("the fullURLstring is: ")
+//        print(fullUrlString)
+        fullUrlString = fullUrlString?.appendingQueryParameters(route.urlParameters())
+        print(fullUrlString)
         
         var getRequest = URLRequest(url: fullUrlString!)
         getRequest.httpMethod = "GET"
         Singleton.session.dataTask(with: getRequest) { (data, response, error) in
-            
+
             if let data = data {
-           completionHandler(data)
-            }
-            
+               completionHandler(data)
+                }
+
         }.resume()
+        
         
     }
     
