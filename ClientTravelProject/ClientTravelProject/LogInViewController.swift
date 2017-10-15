@@ -29,16 +29,31 @@ class LogInViewController: UIViewController {
     @IBAction func logInAction(_ sender: Any) {
         //  When the user taps on this button the corresponding the action that is going to result the network request is going to be made to the api representation that we had declared and essentially what happens from there whether the user's log in info is correct the user will be signed in
         networkingInstance.fetch(route: Route.users(email: emailTextField.text!, password: passwordTextField.text!)) { (data) in
-            if HttpsStatusCodes.unauthorized.rawValue == self.httpResponse.statusCode {
-                print("Sorry no entry")
-                print(self.httpResponse.statusCode)
-            }
-            else {
-                print("Okay you are good")
-                print(self.httpResponse)
-            }
-            
+//            if self.httpResponse.statusCode == 200 {
+//                print("Sorry no entry")
+//            }
+//            else {
+//                print("Okay you are good")
+//            }
+//
+//            }
+            print("")
+            print("")
+            print("")
+            print("")
+            print(self.httpResponse.statusCode)
+            let realDate = Date()
+            let date = DateFormatter()
+            date1 = date.dateFormat = "hh:mm:ss "
+            let appenededDate = "Sun, 15 Oct 2017 \(date1) GMT"
+           let dateTime = appenededDate.string(from: realDate)
+            print(dateTime)
+            if self.httpResponse.statusCode == 200 {
+            let users = try? JSONDecoder().decode(Users.self, from: data)
+            print(users)
+            } else if self.httpResponse.statusCode == 500 {
+                print("No entry")
             }
         }
     }
-
+}

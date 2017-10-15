@@ -49,17 +49,25 @@ enum Route {
         case .trips(let email):
             var tripsParameters = ["email": String(email)]
             return tripsParameters
-//            So we have the specific parameters for each of the endpoints
+            //            So we have the specific parameters for each of the endpoints
         }
         
     }
     
+    func urlHeaders() -> [String: String] {
+        let date = Date()
+        var urlHeaders = ["Content-Type": "application/json",
+                          "Content-Length": "104",
+                          "Server": "Werkzeug/0.12.2 Python/3.6.2",
+                          "Date": "Sun, 15 Oct 2017 07:11:52 GMT"]
+        return urlHeaders
+    }
 }
 
 // This is our error handling and this determines whether the user could log in or not
 
 enum HttpsStatusCodes: Int {
-//    These are the status codes that we can possible encounter of the results of network requests
+    //    These are the status codes that we can possible encounter of the results of network requests
     case ok = 200
     case created = 201
     case accepted = 202
@@ -78,23 +86,27 @@ class UsersNetworkingLayer {
     
     var baseURL = "http://127.0.0.1:5000"
     
-//    This is the function that determines the path that we are going to be taking the course of
+    //    This is the function that determines the path that we are going to be taking the course of
     func fetch(route: Route, completionHandler: @escaping (Data) -> Void) {
         var fullUrlString = URL(string: baseURL.appending(route.path()))
         print("the fullURLstring is: ")
-//        print(fullUrlString)
+        //        print(fullUrlString)
         fullUrlString = fullUrlString?.appendingQueryParameters(route.urlParameters())
         print(fullUrlString)
         
         var getRequest = URLRequest(url: fullUrlString!)
         getRequest.httpMethod = "GET"
+        getRequest.allHTTPHeaderFields = route.urlHeaders()
         Singleton.session.dataTask(with: getRequest) { (data, response, error) in
-
+            
             if let data = data {
-               completionHandler(data)
+                DispatchQueue.main.async {
+                    print(response)
+                    completionHandler(data)
                 }
-
-        }.resume()
+            }
+            
+            }.resume()
         
         
     }
