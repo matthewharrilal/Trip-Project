@@ -251,18 +251,24 @@ class Trips(Resource):
         # This function will essentially delete resources
         # First we need access to the collection
         collection_of_trips = database.trips
+        collection_of_posts = database.posts
+
 
         # Then we have to find which document in our database that we have to delete
         requested_email = request.args.get('email')
+        requested_password = request.args.get('password')
+
+        encoded_password = requested_password.encode('utf-8')
 
         # Now that we have the email we have to find the document in our database
         trips_email = collection_of_trips.find_one({'email': requested_email})
+        user_account_find = collection_of_posts.find_one({'email': requested_email})
 
         # Now that we are in the proccess of finding it we have to confirm if the document actually exists
         if trips_email is None:
             print('The document you are trying to delete does not exist')
             return(None, 404, None)
-        else:
+        elif trips_email is not None and bcrypt.checkpw(encoded_password, user_account_find['password']):
             removed_trip = collection_of_trips.remove(trips_email)
             print('The trip has been removed')
             return(removed_trip, 204, None)
