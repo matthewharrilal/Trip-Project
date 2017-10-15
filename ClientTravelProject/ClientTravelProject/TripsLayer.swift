@@ -12,14 +12,14 @@ import UIKit
 struct Trips {
 //    What we are essentially doing here is that we are saying that these are the properties that we want modeled for the data and since we have a non relational database we similarly enforcing a schema
     let email: String?
-    let completed: Bool
+    let completed: Bool?
     let destination:String?
     let startDate: String?
     let endDate: String?
     let latitude: String?
     let longitude: String?
     let waypointDestination: String?
-    init(email:String?, completed: Bool, destination: String?, startDate: String?, endDate: String?, latitude: String?, longitude: String?, waypointDestination: String?) {
+    init(email:String?, completed: Bool?, destination: String?, startDate: String?, endDate: String?, latitude: String?, longitude: String?, waypointDestination: String?) {
         self.email = email
         self.completed = completed
         self.destination = destination

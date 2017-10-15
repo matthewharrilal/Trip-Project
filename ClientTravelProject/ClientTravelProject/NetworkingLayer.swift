@@ -58,6 +58,14 @@ enum Route {
 
 // This is our error handling and this determines whether the user could log in or not
 
+enum HttpsStatusCodes: Int {
+//    These are the status codes that we can possible encounter of the results of network requests
+    case ok = 200
+    case created = 201
+    case accepted = 202
+    case noContent = 204
+    case badRequest = 400
+}
 
 
 class UsersNetworkingLayer {
@@ -67,7 +75,7 @@ class UsersNetworkingLayer {
     
 //    This is the function that determines the path that we are going to be taking the course of
     func fetch(route: Route, completionHandler: @escaping (Data) -> Void) {
-        var fullUrlString = URL(string: baseURL.appending(route.path()))
+        let fullUrlString = URL(string: baseURL.appending(route.path()))
         fullUrlString?.appendingQueryParameters(route.urlParameters())
         
         var getRequest = URLRequest(url: fullUrlString!)
