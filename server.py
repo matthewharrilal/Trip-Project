@@ -238,7 +238,7 @@ class Trips(Resource):
 
         # Now that we have the raw value we have to actually see that
         # it is stored within our database
-        email_find = collection_of_trips.find({'email': trips_email})
+        email_find = collection_of_trips.find_one({'email': trips_email})
         user_password_find = collection_of_posts.find_one({'email': trips_email})
 
         if bcrypt.checkpw(encoded_password, user_password_find['password']):
