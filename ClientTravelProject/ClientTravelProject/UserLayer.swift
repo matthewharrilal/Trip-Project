@@ -28,7 +28,7 @@ extension Users: Decodable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: additionalKeys.self)
         let email = try container.decodeIfPresent(String.self, forKey: .email)
-        let password = try container.decodeIfPresent(String.self, forKey: .password)
+        let password = try container.decodeIfPresent(String.self, forKey: .password) ?? "No password"
         self.init(email: email, password: password)
     }
 }

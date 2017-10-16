@@ -12,7 +12,18 @@ import UIKit
 
 //Essentially we have to model the code and take the neccesary components from there
 
+let session = URLSession.shared
 
+struct BasicAuth {
+    static func generateBasicAuthHeader(username: String, password: String) -> String {
+        let loginString = String(format: "%@:%@", username, password)
+        let loginData: Data = loginString.data(using: String.Encoding.utf8)!
+        let base64LoginString = loginData.base64EncodedString(options: .init(rawValue: 0))
+        let authHeaderString = "Basic \(base64LoginString)"
+        
+        return authHeaderString
+    }
+}
 
 class Singleton {
     //    Essentially what this class will be doing is providing one use of the session therefore we can easily pass this aroundn when we are making network requests
@@ -102,13 +113,22 @@ class UsersNetworkingLayer {
         var getRequest = URLRequest(url: fullUrlString!)
         getRequest.httpMethod = "GET"
         getRequest.allHTTPHeaderFields = route.urlHeaders()
-        Singleton.session.dataTask(with: getRequest) { (data, response, error) in
+        
+        /*
+         let session = URLsession.shared
+         let task = session(urrequest: getRequest){data,response,error in
+         
+         
+         }
+         */
+        
+        
+        session.dataTask(with: getRequest) { (data, response, error) in
             
             if let data = data {
-                DispatchQueue.main.async {
                     print(response)
                     completionHandler(data)
-                }
+               
             }
             
             }.resume()
