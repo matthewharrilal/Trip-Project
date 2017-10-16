@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1C1D82E41F945B71003C1CA4 /* DisplayingOfTrips.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C1D82E31F945B71003C1CA4 /* DisplayingOfTrips.swift */; };
 		1C4EE3E71F9074BB009E6E00 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C4EE3E61F9074BB009E6E00 /* AppDelegate.swift */; };
 		1C4EE3E91F9074BB009E6E00 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C4EE3E81F9074BB009E6E00 /* LogInViewController.swift */; };
 		1C4EE3EC1F9074BB009E6E00 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C4EE3EA1F9074BB009E6E00 /* Main.storyboard */; };
@@ -38,6 +39,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1C1D82E31F945B71003C1CA4 /* DisplayingOfTrips.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayingOfTrips.swift; sourceTree = "<group>"; };
 		1C4EE3E31F9074BB009E6E00 /* ClientTravelProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ClientTravelProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1C4EE3E61F9074BB009E6E00 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1C4EE3E81F9074BB009E6E00 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
@@ -115,6 +117,7 @@
 				1C4EE3EF1F9074BB009E6E00 /* LaunchScreen.storyboard */,
 				1C4EE3F21F9074BB009E6E00 /* Info.plist */,
 				38BC578C7344E6F444A39CB2 /* AlertsAndErrors.swift */,
+				1C1D82E31F945B71003C1CA4 /* DisplayingOfTrips.swift */,
 			);
 			path = ClientTravelProject;
 			sourceTree = "<group>";
@@ -276,6 +279,7 @@
 				1C4EE4151F9078CE009E6E00 /* NetworkingLayer.swift in Sources */,
 				1C4EE4171F915B63009E6E00 /* UserLayer.swift in Sources */,
 				1C4EE3E71F9074BB009E6E00 /* AppDelegate.swift in Sources */,
+				1C1D82E41F945B71003C1CA4 /* DisplayingOfTrips.swift in Sources */,
 				38BC5991C7776BEA7419CE67 /* AlertsAndErrors.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

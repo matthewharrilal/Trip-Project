@@ -32,6 +32,9 @@ class LogInViewController: UIViewController {
         networkingInstance.fetch(route: Route.users(email: emailTextField.text!, password: passwordTextField.text!)) { data, responseInt in
             if responseInt == 200 {
                 print("Granted Entry")
+                DispatchQueue.main.async {
+                    self.performSegue(withIdentifier: "DisplayTrips", sender: nil)
+                }
             }
             else {
                 DispatchQueue.main.async {

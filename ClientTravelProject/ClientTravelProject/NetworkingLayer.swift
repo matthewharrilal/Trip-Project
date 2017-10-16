@@ -65,19 +65,19 @@ enum Route {
         
     }
     
-    func urlHeaders() -> [String: String] {
-        let realDate = Date()
-        let date = DateFormatter()
-        date.dateFormat = "hh:mm:ss"
-        var formattedDate = date
-        let todaysDate = formattedDate.string(from: realDate)
-        let appendedDate = "Sun, 15 Oct 2017 \(todaysDate) GMT"
-        var urlHeaders = ["Content-Length": "104",
-                           "Content-Type": "application/json",
-                          "Server": "Werkzeug/0.12.2 Python/3.6.2",
-                          "Date": appendedDate]
-        return urlHeaders
-    }
+//    func urlHeaders() -> [String: String] {
+//        let realDate = Date()
+//        let date = DateFormatter()
+//        date.dateFormat = "hh:mm:ss"
+//        var formattedDate = date
+//        let todaysDate = formattedDate.string(from: realDate)
+//        let appendedDate = "Sun, 15 Oct 2017 \(todaysDate) GMT"
+//        var urlHeaders = ["Content-Length": "104",
+//                           "Content-Type": "application/json",
+//                          "Server": "Werkzeug/0.12.2 Python/3.6.2",
+//                          "Date": appendedDate]
+//        return urlHeaders
+//    }
 }
 
 // This is our error handling and this determines whether the user could log in or not
@@ -112,7 +112,7 @@ class UsersNetworkingLayer {
         
         var getRequest = URLRequest(url: fullUrlString!)
         getRequest.httpMethod = "GET"
-        getRequest.allHTTPHeaderFields = route.urlHeaders()
+       // getRequest.allHTTPHeaderFields = route.urlHeaders()
         session.dataTask(with: getRequest) { (data, response, error) in
             
            let statusCode: Int = (response as! HTTPURLResponse).statusCode
