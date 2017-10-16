@@ -12,9 +12,10 @@ class LogInViewController: UIViewController {
     //    Our UI Elements
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
-
+    var tripsUser: Any?
 
     let alert = Alerts()
+    
 
     let networkingInstance = UsersNetworkingLayer()
     override func viewDidLoad() {
@@ -43,4 +44,13 @@ class LogInViewController: UIViewController {
             }
          }
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "DisplayTrips" {
+            let displayTripsVC = segue.destination as? DisplayTrips
+            displayTripsVC?.passwordText = passwordTextField.text
+            displayTripsVC?.emailText = emailTextField.text
+        }
+    }
 }
+

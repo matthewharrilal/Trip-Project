@@ -33,7 +33,7 @@ struct Trips {
 }
 
 struct ArrayTrips: Decodable {
-    let trips: [Trips]
+    let tripsList: [Trips]
 }
 
 extension Trips: Decodable {

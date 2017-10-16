@@ -36,7 +36,7 @@ class Singleton {
 enum Route {
     //    They can either take the users or the trips route
     case users(email: String, password: String)
-    case trips(email: String)
+    case trips(email: String,password: String)
     
     //    Now that we have declared the possible routes they can take we have to declare the pathways the user can take
     func path() -> String {
@@ -57,8 +57,9 @@ enum Route {
             var userParameters = ["email": String(email),
                                   "password": "\(password)"]
             return userParameters
-        case .trips(let email):
-            var tripsParameters = ["email": String(email)]
+        case .trips(let email, let password):
+            var tripsParameters = ["email": String(email),
+                                   "password": "\(password)"]
             return tripsParameters
             //            So we have the specific parameters for each of the endpoints
         }
