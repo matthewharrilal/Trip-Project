@@ -54,7 +54,6 @@ class DisplayTrips: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         let trips1 = trips[indexPath.row]
         cell.textLabel?.text = trips1.destination
-        cell.detailTextLabel?.text = String(describing: trips1.completed)
         return cell
     }
     

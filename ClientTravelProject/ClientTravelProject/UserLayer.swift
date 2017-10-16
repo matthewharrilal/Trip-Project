@@ -12,9 +12,11 @@ import UIKit
 struct Users {
     let email: String?
     let password: String?
+    let credential: String?
     init(email: String?, password: String?) {
         self.email = email
         self.password = password
+        self.credential = BasicAuth.generateBasicAuthHeader(username: self.email!, password: self.password!)
     }
 }
 

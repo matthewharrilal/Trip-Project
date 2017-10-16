@@ -7,7 +7,9 @@ import json
 from CustomClass import JSONEncoder
 from flask import jsonify
 import pdb
-
+from bson import BSON
+from bson import json_util
+from basicauth import decode
 
 app = Flask(__name__)
 client = MongoClient('mongodb://localhost:27017/')
@@ -15,6 +17,28 @@ database = app.db = client.trip_planner_development
 rounds = app.bcrypt_rounds = 5
 api = Api(app)
 
+
+def authenticated_request(func):
+    def wrapper(*args, **kwargs):
+        auth = request.authorization
+
+        auth_code = request.headers['authorization']
+        email, password = decode(auth_code)
+        if email is not None and password is not None:
+            user_collection = database.posts
+            user = user_collection.find_one({'email': email})
+            if user is not None:
+                encoded_password = password.encode('utf-8')
+                if bcrypt.checkpw(encoded_password, user['password']):
+                    return func(*args, **kwargs)
+                else:
+                    return ({'error': 'email or password is not correct'}, 401, None)
+            else:
+                return ({'error': 'could not find user in the database'}, 400, None)
+        else:
+            return ({'error': 'enter both email and password'}, 400, None)
+
+    return wrapper
 
 class User(Resource):
     def post(self):
@@ -53,51 +77,29 @@ class User(Resource):
             print('This document could not be inserted into our database')
             return(None, 404, None)
 
+    @authenticated_request
     def get(self):
             # The function that ill be fetching our resources from the database
             # So we need access to the database and collection_
 
             collection_of_posts = app.db.posts
-
-            # Let us get access to our other collection to return all the data all at once
-
-            # Now that we have the collection lets fetch some resources
-            #  We have to get the arguments of the users credentialls
-
-            user_email = request.args.get('email')
-            user_password = request.args.get('password')
-        # And the reason that we have to use get because it is getting the raw value  for the string
-
-            # So essentially what we have to do now is that we have to
-            # figure out a way to extract that data back into the plain text
-            # back into a plain text
-
-            # So we have access to the collection now
-            # And we also have access to finding the document
-
+            auth = request.authorization
 
             # since then emails are unique we will use them as our fetching tool
-            user_find = collection_of_posts.find_one({"email": user_email})
-            encoded_password = user_password.encode('utf-8')
+            user_find = collection_of_posts.find_one({"email": auth.username})
 
-            # # Now we have to do some error handling
-            # if user_find is None:
-            #     print('Sorry the user can not be found')
-            #     return(None, 404,None)
-            # elif user_find is not None:
-            #     return(user_find, 200, None)
-            #     '''The difference between returning user email and user find is that if we just return user email when we get back the json object
-            #     from our database we literally just get back the email but if we were to use user find we can get back the whole document'''
             '''So essentially the error handling that we are doing now compared to the error
             handling we  have above is more solid because now we are essentially making our client which is password
             we are essentially making it we can only retrieve the results if the passwords math'''
-            if bcrypt.checkpw(encoded_password, user_find['password']):
+            if auth.username is not None and auth.password is not None:
                 user_find.pop('password')
                 print('The user has successfully signed in')
                 return(user_find, 200, None)
             else:
                 print('The user cannot be found')
                 return(None, 401, None)
+
+    @authenticated_request
     def put(self):
         # This function is what essentially edits the resources
         # This function is what essentially edits the resources
@@ -107,15 +109,11 @@ class User(Resource):
         collection_of_posts = database.posts
         # Now that we have the collection we can no edit the resources
 
-        # This fetching the documents from mongo
-        user_email = request.args.get('email')
+        auth = request.authorization
 
-        # This is getting the raw value for the username from the post request
         user_username = request.json.get('username')
-
-        # Now that we have the two we can common and then from there we can edit the information
         # We now have to locate the document with the specific problems
-        user_query = collection_of_posts.find_one({'email': user_email})
+        user_query = collection_of_posts.find_one({'email': auth.username})
         # So now we essentially have access to all the documents with emails in them
         if user_query is None:
             '''Some simple user querying to see if the documents we actually
@@ -129,38 +127,44 @@ class User(Resource):
             print('The documents have been edited')
             return(user_query, 200, None)
 
+    @authenticated_request
     def delete(self):
         # This is essentially the function to delete users and their accounts
         '''We are going to take the collection find the specific email and remove it
         using the remove method'''
-
+        # pdb.set_trace()
         # Therefore first we have to find the document
         collection_of_posts = database.posts
         # Since we are deleting the user we have to delete the trips that correspond to the email
 
-        collection_of_trips = database.trips
+        # collection_of_trips = database.trips
         # Now let us fetch the email from the database as a unique identifier
-        user_email = request.args.get('email')
+        auth = request.authorization
 
         # Now that we have the email we can delete it using a general query
-        user_query = collection_of_posts.find_one({'email': user_email})
-        trips_query = collection_of_trips.find_one({'email': user_email})
+        user_query = collection_of_posts.find_one({'email': auth.username})
+        trips_query = collection_of_trips.find_one({'email': auth.username})
 
         # Now we can delete the resources
-        if user_query is None and trips_query is None:
+        if user_query is not None:
+                collection_of_posts.remove(user_query)
+                user_query.pop('password')
+                collection_of_trips.remove(trips_query)
+                print('The user and their trips have successfully been deleted')
+                return(user_query, 204, None)
+        else:
             print('The user could not be found to be deleted')
             return(None, 404, None)
-        else:
-            collection_of_posts.remove(user_query)
-            collection_of_trips.remove(trips_query)
-            print('The user and their trips have successfully been deleted')
-            return(user_query, 204, None)
 
+
+    @authenticated_request
     def patch(self):
         # So essentially this edits the whole doc as oppose to a singularity
 
         # So first we need to find the document through a unique identifier
         collection_of_posts = database.posts
+
+        auth = request.authorization
 
         # Now that we have the collection we can now patch the resources
         # By finding the docs with their unique identifier
@@ -171,7 +175,7 @@ class User(Resource):
         user_password = request.json.get('password')
         edited_user_email = request.json.get('email')
         # So now that we have all the neccesary resources we can now patch the docs
-        user_query = collection_of_posts.find_one({'email': user_email})
+        user_query = collection_of_posts.find_one({'email': auth.username})
 
         # Now we implement the error handling
         if user_query is None:
@@ -188,6 +192,7 @@ class User(Resource):
 
 class Trips(Resource):
     # This is essentially the same as the users class but for the Trips
+    @authenticated_request
     def post(self):
 
         '''So essentially the plan for this function is going to be essentially to post resources but befroe that can even happen
@@ -204,18 +209,17 @@ class Trips(Resource):
         requested_json = request.json
 
         # So now we need access to the password and the email in the parmaeters that the network request consists of
-        user_email = request.args.get('email')
-        user_password = request.args.get('password')
+        auth = request.authorization
 
-        encoded_password = user_password.encode('utf-8')
+        encoded_password = auth.password.encode('utf-8')
 
-        user_account_find = collection_of_posts.find_one({'email': user_email})
+        user_account_find = collection_of_posts.find_one({'email': auth.username})
 
         '''So essentially the plan is for us to encode the data and what we have to do is that we have to
         even when the user is posting their trips even though we are not passing in the password what we can essentially do
         is that we can still use that we are making a get request'''
 
-        if 'email' in requested_json and bcrypt.checkpw(encoded_password, user_account_find['password']):
+        if bcrypt.checkpw(encoded_password, user_account_find['password']):
             collection_of_trips.insert_one(requested_json)
             print('The document does have an email address in it')
             return(requested_json, 201, None)
@@ -223,31 +227,33 @@ class Trips(Resource):
             print("The document did not contain the email")
             return(None, 404, None)
 
+    @authenticated_request
     def get(self):
         # This function essentially fetches the resources
         # Let us get access to the collection first
         collection_of_trips = database.trips
         collection_of_posts = database.posts
         # Now that we have the collection we can fetch resources by email
-        trips_email = request.args.get('email')
 
-        # Remember we are focusing on the parameters becuase they can only fetch if they are logged in
-        user_password = request.args.get('password')
-
-        encoded_password = user_password.encode('utf-8')
+        auth = request.authorization
+        encoded_password = auth.password.encode('utf-8')
 
         # Now that we have the raw value we have to actually see that
         # it is stored within our database
-        email_find = collection_of_trips.find_one({'email': trips_email})
-        user_password_find = collection_of_posts.find_one({'email': trips_email})
+        email_find = collection_of_trips.find_one({'email': auth.username})
+        user_password_find = collection_of_posts.find_one({'email': auth.username})
 
+
+        # json_email_find = dumps(email_find)
         if bcrypt.checkpw(encoded_password, user_password_find['password']):
             print("The user succesfully fetched their trips")
+            print("The elements in the document array are : %s" %(documents_array))
             return(email_find, 200, None)
         else:
             print('The trips can not be found')
             return(None, 401, None)
 
+    @authenticated_request
     def delete(self):
         # This function will essentially delete resources
         # First we need access to the collection
@@ -256,14 +262,13 @@ class Trips(Resource):
 
 
         # Then we have to find which document in our database that we have to delete
-        requested_email = request.args.get('email')
-        requested_password = request.args.get('password')
+        auth = request.authorization
 
-        encoded_password = requested_password.encode('utf-8')
+        encoded_password = auth.password.encode('utf-8')
 
         # Now that we have the email we have to find the document in our database
-        trips_email = collection_of_trips.find_one({'email': requested_email})
-        user_account_find = collection_of_posts.find_one({'email': requested_email})
+        trips_email = collection_of_trips.find_one({'email': auth.username})
+        user_account_find = collection_of_posts.find_one({'email': auth.username})
 
         # Now that we are in the proccess of finding it we have to confirm if the document actually exists
         if trips_email is None:
@@ -274,6 +279,7 @@ class Trips(Resource):
             print('The trip has been removed')
             return(removed_trip, 204, None)
 
+    @authenticated_request
     def put(self):
         '''Essentially what this function will do is that it will allow us to be able to edit resources in our document
         however since when a put request is made all the data gets sent back with it therefore what we have to do is that we
@@ -288,7 +294,7 @@ class Trips(Resource):
         # So now that we have the collection we can now specify what the user has to do make a succesfull put request
 
         # First we have to find the document they want to edit
-        requested_email = request.args.get('email')
+        auth = request.authorization
         trips_query = collection_of_trips.find_one({'email': requested_email})
 
         requested_password = request.args.get('password')
@@ -333,16 +339,8 @@ class Trips(Resource):
 
 
 # This is essentially our decorator and what we are doing here is that we are basically self contained blocks of code that we can pass around
-def authenticated_request(func):
-    def wrapper(*args, **kwargs):
-        auth = request.authorization
 
-        if not auth or not validate_auth(auth.username, auth.password):
-            return ({'error': 'Basic Auth Required.'}, 401, None)
 
-        return func(*args, **kwargs)
-
-    return wrapper
 
 api.add_resource(User, '/users')
 api.add_resource(Trips, '/trips')
