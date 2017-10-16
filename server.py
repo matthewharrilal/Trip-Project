@@ -295,12 +295,11 @@ class Trips(Resource):
 
         # First we have to find the document they want to edit
         auth = request.authorization
-        trips_query = collection_of_trips.find_one({'email': requested_email})
+        trips_query = collection_of_trips.find_one({'email': auth.username})
 
-        requested_password = request.args.get('password')
-        encoded_password = requested_password.encode('utf-8')
+        encoded_password = auth.password.encode('utf-8')
 
-        user_account_find = collection_of_posts.find_one({'email': requested_email})
+        user_account_find = collection_of_posts.find_one({'email': auth.username})
 
         #  We have to take the edited information from the json body they are sending
         print ("request json is: " + str(request.json))
