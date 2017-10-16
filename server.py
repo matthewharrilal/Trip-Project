@@ -56,7 +56,7 @@ class User(Resource):
     def get(self):
             # The function that ill be fetching our resources from the database
             # So we need access to the database and collection_
-            pdb.set_trace()
+            
             collection_of_posts = app.db.posts
 
             # Let us get access to our other collection to return all the data all at once

@@ -28,9 +28,11 @@ class LogInViewController: UIViewController {
     
     @IBAction func logInAction(_ sender: Any) {
         //  When the user taps on this button the corresponding the action that is going to result the network request is going to be made to the api representation that we had declared and essentially what happens from there whether the user's log in info is correct the user will be signed in
-        networkingInstance.fetch(route: Route.users(email: emailTextField.text!, password: passwordTextField.text!)) { data in
-            print(self.httpResponse)
-
+        networkingInstance.fetch(route: Route.users(email: emailTextField.text!, password: passwordTextField.text!)) { (data, response) in
+            let statusCode = (response as! HTTPURLResponse).statusCode
+            if statusCode == 200 {
+                print("Hey")
             }
-         }
+        }
     }
+}

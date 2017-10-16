@@ -103,7 +103,7 @@ class UsersNetworkingLayer {
     var baseURL = "http://127.0.0.1:5000"
     
     //    This is the function that determines the path that we are going to be taking the course of
-    func fetch(route: Route, completionHandler: @escaping (Data) -> Void) {
+    func fetch(route: Route, completionHandler: @escaping (Data, HTTPURLResponse) -> Void) {
         var fullUrlString = URL(string: baseURL.appending(route.path()))
         print("the fullURLstring is: ")
         //        print(fullUrlString)
@@ -113,21 +113,16 @@ class UsersNetworkingLayer {
         var getRequest = URLRequest(url: fullUrlString!)
         getRequest.httpMethod = "GET"
         getRequest.allHTTPHeaderFields = route.urlHeaders()
-        
-        /*
-         let session = URLsession.shared
-         let task = session(urrequest: getRequest){data,response,error in
-         
-         
-         }
-         */
-        
-        
         session.dataTask(with: getRequest) { (data, response, error) in
             
+//            let statusCode = (response as! HTTPURLResponse).statusCode
+//            print(statusCode)
             if let data = data {
                     print(response)
-                    completionHandler(data)
+                    print(data)
+//                    let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments)
+//                    print(json)
+                completionHandler(data, response as! HTTPURLResponse)
                
             }
             
@@ -138,7 +133,7 @@ class UsersNetworkingLayer {
     
 }
 
-//This is essentially what we call the sanitizing code to be able to implement the parameters
+//This is essentially what we call the sanitizing code to be able to implement the parametersrr
 extension URL {
     func appendingQueryParameters(_ parametersDictionary : Dictionary<String, String>) -> URL {
         let URLString : String = String(format: "%@?%@", self.absoluteString, parametersDictionary.queryParameters)
