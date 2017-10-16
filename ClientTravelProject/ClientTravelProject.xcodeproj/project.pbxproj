@@ -17,6 +17,7 @@
 		1C4EE4151F9078CE009E6E00 /* NetworkingLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C4EE4141F9078CE009E6E00 /* NetworkingLayer.swift */; };
 		1C4EE4171F915B63009E6E00 /* UserLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C4EE4161F915B63009E6E00 /* UserLayer.swift */; };
 		1C4EE4191F915D6D009E6E00 /* TripsLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C4EE4181F915D6D009E6E00 /* TripsLayer.swift */; };
+		38BC5991C7776BEA7419CE67 /* AlertsAndErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BC578C7344E6F444A39CB2 /* AlertsAndErrors.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		1C4EE4141F9078CE009E6E00 /* NetworkingLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingLayer.swift; sourceTree = "<group>"; };
 		1C4EE4161F915B63009E6E00 /* UserLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLayer.swift; sourceTree = "<group>"; };
 		1C4EE4181F915D6D009E6E00 /* TripsLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripsLayer.swift; sourceTree = "<group>"; };
+		38BC578C7344E6F444A39CB2 /* AlertsAndErrors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertsAndErrors.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +114,7 @@
 				1C4EE3ED1F9074BB009E6E00 /* Assets.xcassets */,
 				1C4EE3EF1F9074BB009E6E00 /* LaunchScreen.storyboard */,
 				1C4EE3F21F9074BB009E6E00 /* Info.plist */,
+				38BC578C7344E6F444A39CB2 /* AlertsAndErrors.swift */,
 			);
 			path = ClientTravelProject;
 			sourceTree = "<group>";
@@ -273,6 +276,7 @@
 				1C4EE4151F9078CE009E6E00 /* NetworkingLayer.swift in Sources */,
 				1C4EE4171F915B63009E6E00 /* UserLayer.swift in Sources */,
 				1C4EE3E71F9074BB009E6E00 /* AppDelegate.swift in Sources */,
+				38BC5991C7776BEA7419CE67 /* AlertsAndErrors.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -103,7 +103,7 @@ class UsersNetworkingLayer {
     var baseURL = "http://127.0.0.1:5000"
     
     //    This is the function that determines the path that we are going to be taking the course of
-    func fetch(route: Route, completionHandler: @escaping (Data, HTTPURLResponse) -> Void) {
+    func fetch(route: Route, completionHandler: @escaping (Data, Int) -> Void) {
         var fullUrlString = URL(string: baseURL.appending(route.path()))
         print("the fullURLstring is: ")
         //        print(fullUrlString)
@@ -115,14 +115,14 @@ class UsersNetworkingLayer {
         getRequest.allHTTPHeaderFields = route.urlHeaders()
         session.dataTask(with: getRequest) { (data, response, error) in
             
-//            let statusCode = (response as! HTTPURLResponse).statusCode
+           let statusCode: Int = (response as! HTTPURLResponse).statusCode
 //            print(statusCode)
             if let data = data {
                     print(response)
                     print(data)
 //                    let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments)
 //                    print(json)
-                completionHandler(data, response as! HTTPURLResponse)
+                completionHandler(data, statusCode)
                
             }
             

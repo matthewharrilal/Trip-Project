@@ -12,9 +12,10 @@ class LogInViewController: UIViewController {
     //    Our UI Elements
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
-    
-    let httpResponse = HTTPURLResponse()
-    
+
+
+    let alert = Alerts()
+
     let networkingInstance = UsersNetworkingLayer()
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,11 +29,15 @@ class LogInViewController: UIViewController {
     
     @IBAction func logInAction(_ sender: Any) {
         //  When the user taps on this button the corresponding the action that is going to result the network request is going to be made to the api representation that we had declared and essentially what happens from there whether the user's log in info is correct the user will be signed in
-        networkingInstance.fetch(route: Route.users(email: emailTextField.text!, password: passwordTextField.text!)) { (data, response) in
-            let statusCode = (response as! HTTPURLResponse).statusCode
-            if statusCode == 200 {
-                print("Hey")
+        networkingInstance.fetch(route: Route.users(email: emailTextField.text!, password: passwordTextField.text!)) { data, responseInt in
+            if responseInt == 200 {
+                print("Granted Entry")
             }
-        }
+            else {
+                DispatchQueue.main.async {
+                    self.alert.logInError(controller: self)
+                }
+            }
+         }
     }
 }
