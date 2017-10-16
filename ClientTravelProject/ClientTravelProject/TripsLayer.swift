@@ -19,7 +19,7 @@ struct Trips {
     let latitude: String?
     let longitude: String?
     let waypointDestination: String?
-    init(email:String?, completed: Bool?, destination: String?, startDate: String?, endDate: String?, latitude: String?, longitude: String?, waypointDestination: String?) {
+    private init(email:String?, completed: Bool?, destination: String?, startDate: String?, endDate: String?, latitude: String?, longitude: String?, waypointDestination: String?) {
         self.email = email
         self.completed = completed
         self.destination = destination
@@ -30,6 +30,10 @@ struct Trips {
         self.waypointDestination = waypointDestination
     }
 //    Here we are essentially initalizing a user therefore ever user will have these implementations 
+}
+
+struct ArrayTrips: Decodable {
+    let trips: [Trips]
 }
 
 extension Trips: Decodable {

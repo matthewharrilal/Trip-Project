@@ -110,6 +110,7 @@
 				1C4EE3E61F9074BB009E6E00 /* AppDelegate.swift */,
 				1C4EE3E81F9074BB009E6E00 /* LogInViewController.swift */,
 				1C4EE4141F9078CE009E6E00 /* NetworkingLayer.swift */,
+				1C1D82E31F945B71003C1CA4 /* DisplayingOfTrips.swift */,
 				1C4EE4161F915B63009E6E00 /* UserLayer.swift */,
 				1C4EE4181F915D6D009E6E00 /* TripsLayer.swift */,
 				1C4EE3EA1F9074BB009E6E00 /* Main.storyboard */,
@@ -117,7 +118,6 @@
 				1C4EE3EF1F9074BB009E6E00 /* LaunchScreen.storyboard */,
 				1C4EE3F21F9074BB009E6E00 /* Info.plist */,
 				38BC578C7344E6F444A39CB2 /* AlertsAndErrors.swift */,
-				1C1D82E31F945B71003C1CA4 /* DisplayingOfTrips.swift */,
 			);
 			path = ClientTravelProject;
 			sourceTree = "<group>";
