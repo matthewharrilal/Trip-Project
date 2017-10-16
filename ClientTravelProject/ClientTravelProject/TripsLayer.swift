@@ -37,26 +37,40 @@ struct ArrayTrips: Decodable {
 }
 
 extension Trips: Decodable {
-    enum additionalKeys: String, CodingKey {
+    enum firstLayerKeys: String, CodingKey {
         case email
+        case trips
+    }
+    enum secondLayerKeys: String, CodingKey {
+        case waypointDestination = "waypoint_destination"
+        case location
+    }
+    
+    enum locationKeys: String, CodingKey {
+        case latitude
+        case longitude
+    }
+    enum additionalKeys: String, CodingKey {
         case completed
         case destination
         case startDate = "start_date"
         case endDate = "end_date"
-        case latitude = "latitude"
-        case longitude = "longitude"
-        case waypointDestination = "waypoint_destination"
+        case waypoint
     }
      init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: additionalKeys.self)
+       let container = try decoder.container(keyedBy: firstLayerKeys.self)
         let email = try container.decodeIfPresent(String.self, forKey: .email)
-        let completed = try container.decodeIfPresent(Bool.self, forKey: .completed)
-        let destination = try container.decodeIfPresent(String.self, forKey: .destination)
-        let startDate = try container.decodeIfPresent(String.self, forKey: .startDate)
-        let endDate = try container.decodeIfPresent(String.self, forKey: .endDate)
-        let latitude = try container.decodeIfPresent(String.self, forKey: .latitude)
-        let longitude = try container.decodeIfPresent(String.self, forKey: .longitude)
-        let waypointDestination = try container.decodeIfPresent(String.self, forKey: .waypointDestination)
+        let tripsContainer = try container.nestedContainer(keyedBy: additionalKeys.self, forKey: .trips)
+        let completed = try tripsContainer.decodeIfPresent(Bool.self, forKey: .completed)
+        let destination = try tripsContainer.decodeIfPresent(String.self, forKey: .destination)
+        let startDate = try tripsContainer.decodeIfPresent(String.self, forKey: .startDate)
+        let endDate = try tripsContainer.decodeIfPresent(String.self, forKey: .endDate)
+        let waypointContainer = try tripsContainer.nestedContainer(keyedBy: secondLayerKeys.self, forKey: .waypoint)
+        let waypointDestination = try waypointContainer.decodeIfPresent(String.self, forKey: .waypointDestination)
+        let locationContainer = try waypointContainer.nestedContainer(keyedBy: locationKeys.self, forKey: .location)
+        let latitude = try locationContainer.decodeIfPresent(String.self, forKey: .latitude)
+        let longitude = try locationContainer.decodeIfPresent(String.self, forKey: .longitude)
         self.init(email: email, completed: completed, destination: destination, startDate: startDate, endDate: endDate, latitude: latitude, longitude: longitude, waypointDestination: waypointDestination)
+        
     }
 }
