@@ -241,15 +241,15 @@ class Trips(Resource):
 
         # Now that we have the raw value we have to actually see that
         # it is stored within our database
-        email_find = collection_of_trips.find_one({'email': auth.username})
+        email_find = collection_of_trips.find({'email': auth.username})
         user_password_find = collection_of_posts.find_one({'email': auth.username})
-
+        json_loads = json.loads(dumps(email_find))
 
         # json_email_find = dumps(email_find)
         if bcrypt.checkpw(encoded_password, user_password_find['password']):
             print("The user succesfully fetched their trips")
             # print("The elements in the document array are : %s" %(documents_array))
-            return(json.loads(dumps(email_find)), 200, None)
+            return(json_loads, 200, None)
         else:
             print('The trips can not be found')
             return(None, 401, None)

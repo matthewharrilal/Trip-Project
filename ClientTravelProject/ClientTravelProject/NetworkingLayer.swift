@@ -74,6 +74,13 @@ enum Route {
             return nil
         }
     }
+    
+//    func deleteBody(user: Users? = nil, trip: Trips? = nil) -> Data {
+//        switch self {
+//        case .trips():
+//            var url
+//        }
+//    }
 }
 
 enum differentHttpsMethods: String {

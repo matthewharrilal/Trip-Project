@@ -34,6 +34,7 @@ class DisplayTrips: UITableViewController {
             print(trips0)
             guard let trips1 = trips0?.tripsList else{return}
             self.trips = trips1
+            print("The elements in the array are : \(self.trips)")
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
