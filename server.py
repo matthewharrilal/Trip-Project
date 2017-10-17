@@ -265,19 +265,26 @@ class Trips(Resource):
         auth = request.authorization
 
         encoded_password = auth.password.encode('utf-8')
-
+        trips_destination = request.args.get('destination')
         # Now that we have the email we have to find the document in our database
         trips_email = collection_of_trips.find_one({'email': auth.username})
         user_account_find = collection_of_posts.find_one({'email': auth.username})
+        # Essentially we are still left with the problem that we dont have the specific trip that the user is trying
+        # to delete
+        removed_destination = collection_of_trips.find_one({'destination': trips_destination})
 
         # Now that we are in the proccess of finding it we have to confirm if the document actually exists
         if trips_email is None:
             print('The document you are trying to delete does not exist')
             return(None, 404, None)
-        elif trips_email is not None and bcrypt.checkpw(encoded_password, user_account_find['password']):
-            removed_trip = collection_of_trips.remove(trips_email)
+        elif trips_email is not None and bcrypt.checkpw(encoded_password, user_account_find['password']) and removed_destination is not None:
+            removed_trip = collection_of_trips.remove(removed_destination)
             print('The trip has been removed')
             return(removed_trip, 204, None)
+
+        
+
+
 
     @authenticated_request
     def put(self):
