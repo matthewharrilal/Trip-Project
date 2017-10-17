@@ -32,7 +32,7 @@ struct BasicAuth {
 enum Route {
     //    They can either take the users or the trips route
     case users()
-    case trips(email: String,password: String)
+    case trips(destination: String?)
     
     //    Now that we have declared the possible routes they can take we have to declare the pathways the user can take
     func path() -> String {
@@ -46,15 +46,10 @@ enum Route {
     
     func urlParameters() -> [String: String] {
         switch self {
-//        case .users(let email, let password):
-//            var userParameters = ["email": String(email),
-//                                  "password": "\(password)"]
-//            return userParameters
-        case .trips(let email, let password):
-            let tripsParameters = ["email": String(email),
-                                   "password": "\(password)"]
+        case .trips(let destination):
+            let tripsParameters = ["destination": String(describing: destination)]
             return tripsParameters
-            //            So we have the specific parameters for each of the endpoints
+         
         case .users:
             return ["":""]
         }
@@ -70,7 +65,8 @@ class UsersNetworkingLayer {
     
     //    This is the function that determines the path that we are going to be taking the course of
     func fetch(route: Route, user: Users, completionHandler: @escaping (Data, Int) -> Void) {
-        let fullUrlString = URL(string: baseURL.appending(route.path()))
+        var fullUrlString = URL(string: baseURL.appending(route.path()))
+        fullUrlString?.appendingQueryParameters(route.urlParameters())
         var getRequest = URLRequest(url: fullUrlString!)
         getRequest.httpMethod = "GET"
         getRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
