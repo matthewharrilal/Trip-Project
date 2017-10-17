@@ -10,6 +10,7 @@ import pdb
 from bson import BSON
 from bson import json_util
 from basicauth import decode
+from bson.json_util import dumps
 
 app = Flask(__name__)
 client = MongoClient('mongodb://localhost:27017/')
@@ -248,7 +249,7 @@ class Trips(Resource):
         if bcrypt.checkpw(encoded_password, user_password_find['password']):
             print("The user succesfully fetched their trips")
             # print("The elements in the document array are : %s" %(documents_array))
-            return(email_find, 200, None)
+            return(json.loads(dumps(email_find)), 200, None)
         else:
             print('The trips can not be found')
             return(None, 401, None)

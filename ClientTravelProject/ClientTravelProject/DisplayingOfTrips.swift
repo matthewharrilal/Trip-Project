@@ -29,7 +29,7 @@ class DisplayTrips: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let user = Users(email: emailText, password: passwordText)
-        networkInstance.fetch(route: Route.trips(), user: user, requestRoute: differentHttpsMethods.getRequest) { (data, responseInt) in
+        networkInstance.fetch(route: Route.trips(), user: user, requestRoute: .getRequest) { (data, responseInt) in
             let trips0 = try? JSONDecoder().decode(ArrayTrips.self, from: data)
             print(trips0)
             guard let trips1 = trips0?.tripsList else{return}
