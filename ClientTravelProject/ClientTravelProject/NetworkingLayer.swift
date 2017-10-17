@@ -45,16 +45,13 @@ enum Route {
     }
     
     func urlParameters() -> [String: String] {
-        //    This is the function where we essentially declare the parameters the user can be able to implement when making the requests
-        
-        //    In addition to this we can declare the parameters specifically for each of the endpoint the user chooses
         switch self {
 //        case .users(let email, let password):
 //            var userParameters = ["email": String(email),
 //                                  "password": "\(password)"]
 //            return userParameters
         case .trips(let email, let password):
-            var tripsParameters = ["email": String(email),
+            let tripsParameters = ["email": String(email),
                                    "password": "\(password)"]
             return tripsParameters
             //            So we have the specific parameters for each of the endpoints
@@ -63,36 +60,6 @@ enum Route {
         }
         
     }
-    
-//    func urlHeaders() -> [String: String] {
-//        let realDate = Date()
-//        let date = DateFormatter()
-//        date.dateFormat = "hh:mm:ss"
-//        var formattedDate = date
-//        let todaysDate = formattedDate.string(from: realDate)
-//        let appendedDate = "Sun, 15 Oct 2017 \(todaysDate) GMT"
-//        var urlHeaders = ["Content-Length": "104",
-//                           "Content-Type": "application/json",
-//                          "Server": "Werkzeug/0.12.2 Python/3.6.2",
-//                          "Date": appendedDate]
-//        return urlHeaders
-//    }
-}
-
-// This is our error handling and this determines whether the user could log in or not
-
-enum HttpsStatusCodes: Int {
-    //    These are the status codes that we can possible encounter of the results of network requests
-    case ok = 200
-    case created = 201
-    case accepted = 202
-    case noContent = 204
-    case badRequest = 400
-    case unauthorized = 401
-    case forbidden = 403
-    case notFound = 404
-    case methodNotAllowed = 405
-    case internalServerError = 500
 }
 
 
@@ -103,23 +70,15 @@ class UsersNetworkingLayer {
     
     //    This is the function that determines the path that we are going to be taking the course of
     func fetch(route: Route, user: Users, completionHandler: @escaping (Data, Int) -> Void) {
-        var fullUrlString = URL(string: baseURL.appending(route.path()))
-        print(fullUrlString)
-        
+        let fullUrlString = URL(string: baseURL.appending(route.path()))
         var getRequest = URLRequest(url: fullUrlString!)
         getRequest.httpMethod = "GET"
         getRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
         getRequest.addValue((user.credential)!, forHTTPHeaderField: "Authorization")
-       // getRequest.allHTTPHeaderFields = route.urlHeaders()
         session.dataTask(with: getRequest) { (data, response, error) in
             
            let statusCode: Int = (response as! HTTPURLResponse).statusCode
-//            print(statusCode)
             if let data = data {
-                    print(response)
-                    print(data)
-//                    let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments)
-//                    print(json)
                 completionHandler(data, statusCode)
                
             }
