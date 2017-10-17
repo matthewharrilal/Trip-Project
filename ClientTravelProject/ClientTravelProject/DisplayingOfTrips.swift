@@ -35,15 +35,15 @@ class DisplayTrips: UITableViewController {
 //                    self.tableView.reloadData()
 //                }
 //        }
-        networkInstance.fetch(route: Route.trips(email: emailText!, password: passwordText!)) { (data, responseInt) in
-            let trips0 = try? JSONDecoder().decode(ArrayTrips.self, from: data)
-            print(trips0)
-            guard let trips1 = trips0?.tripsList else{return}
-            self.trips = trips1
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-        }
+//        networkInstance.fetch(route: Route.trips(email: emailText!, password: passwordText!)) { (data, responseInt) in
+//            let trips0 = try? JSONDecoder().decode(ArrayTrips.self, from: data)
+//            print(trips0)
+//            guard let trips1 = trips0?.tripsList else{return}
+//            self.trips = trips1
+//            DispatchQueue.main.async {
+//                self.tableView.reloadData()
+//            }
+//        }
     }
     
     override func didReceiveMemoryWarning() {

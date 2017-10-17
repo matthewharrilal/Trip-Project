@@ -13,6 +13,7 @@ import UIKit
 //Essentially we have to model the code and take the neccesary components from there
 
 let session = URLSession.shared
+//var user: Users?
 
 struct BasicAuth {
     static func generateBasicAuthHeader(username: String, password: String) -> String {
@@ -25,17 +26,12 @@ struct BasicAuth {
     }
 }
 
-class Singleton {
-    //    Essentially what this class will be doing is providing one use of the session therefore we can easily pass this aroundn when we are making network requests
-    static let session = URLSession.shared
-    private init() {}
-    //    Essentially the reason we initalize it so we dont have to instantiate it again
-}
+
 
 //In this enum we essentially declare the possible routes the user can take
 enum Route {
     //    They can either take the users or the trips route
-    case users(email: String, password: String)
+    case users()
     case trips(email: String,password: String)
     
     //    Now that we have declared the possible routes they can take we have to declare the pathways the user can take
@@ -53,15 +49,17 @@ enum Route {
         
         //    In addition to this we can declare the parameters specifically for each of the endpoint the user chooses
         switch self {
-        case .users(let email, let password):
-            var userParameters = ["email": String(email),
-                                  "password": "\(password)"]
-            return userParameters
+//        case .users(let email, let password):
+//            var userParameters = ["email": String(email),
+//                                  "password": "\(password)"]
+//            return userParameters
         case .trips(let email, let password):
             var tripsParameters = ["email": String(email),
                                    "password": "\(password)"]
             return tripsParameters
             //            So we have the specific parameters for each of the endpoints
+        case .users:
+            return ["":""]
         }
         
     }
@@ -104,15 +102,14 @@ class UsersNetworkingLayer {
     var baseURL = "http://127.0.0.1:5000"
     
     //    This is the function that determines the path that we are going to be taking the course of
-    func fetch(route: Route, completionHandler: @escaping (Data, Int) -> Void) {
+    func fetch(route: Route, user: Users, completionHandler: @escaping (Data, Int) -> Void) {
         var fullUrlString = URL(string: baseURL.appending(route.path()))
-        print("the fullURLstring is: ")
-        //        print(fullUrlString)
-        fullUrlString = fullUrlString?.appendingQueryParameters(route.urlParameters())
         print(fullUrlString)
         
         var getRequest = URLRequest(url: fullUrlString!)
         getRequest.httpMethod = "GET"
+        getRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        getRequest.addValue((user.credential)!, forHTTPHeaderField: "Authorization")
        // getRequest.allHTTPHeaderFields = route.urlHeaders()
         session.dataTask(with: getRequest) { (data, response, error) in
             
