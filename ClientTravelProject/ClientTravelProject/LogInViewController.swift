@@ -67,6 +67,9 @@ class LogInViewController: UIViewController {
             let displayTripsVC = segue.destination as? DisplayTrips
             displayTripsVC?.passwordText = passwordTextField.text
             displayTripsVC?.emailText = emailTextField.text
+            print(displayTripsVC?.emailText)
+            print(displayTripsVC?.passwordText)
+            
         }
     }
 }

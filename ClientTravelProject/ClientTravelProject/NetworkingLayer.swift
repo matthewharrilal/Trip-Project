@@ -32,7 +32,7 @@ struct BasicAuth {
 enum Route {
     //    They can either take the users or the trips route
     case users()
-    case trips(destination: String?)
+    case trips()
     
     //    Now that we have declared the possible routes they can take we have to declare the pathways the user can take
     func path() -> String {
@@ -46,9 +46,9 @@ enum Route {
     
     func urlParameters() -> [String: String] {
         switch self {
-        case .trips(let destination):
-            let tripsParameters = ["destination": String(describing: destination)]
-            return tripsParameters
+        case .trips():
+//            let tripsParameters = ["destination": String(describing: destination)]
+            return ["":""]
          
         case .users:
             return ["":""]
@@ -75,6 +75,8 @@ class UsersNetworkingLayer {
             
            let statusCode: Int = (response as! HTTPURLResponse).statusCode
             if let data = data {
+                print(response)
+                print(data)
                 completionHandler(data, statusCode)
                
             }
