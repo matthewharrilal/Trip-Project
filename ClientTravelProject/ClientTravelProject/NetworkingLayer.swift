@@ -57,6 +57,12 @@ enum Route {
     }
 }
 
+enum differentHttpsMethods: String {
+    case getRequest =  "GET"
+    case postRequest =   "POST"
+    case putRequest =  "PUT"
+    case deleteRequest = "DELETE"
+}
 
 class UsersNetworkingLayer {
     //    We shall be performing our network requests in this class
@@ -64,13 +70,13 @@ class UsersNetworkingLayer {
     var baseURL = "http://127.0.0.1:5000"
     
     //    This is the function that determines the path that we are going to be taking the course of
-    func fetch(route: Route, user: Users, completionHandler: @escaping (Data, Int) -> Void) {
+    func fetch(route: Route, user: Users, requestRoute: differentHttpsMethods , completionHandler: @escaping (Data, Int) -> Void) {
         var fullUrlString = URL(string: baseURL.appending(route.path()))
         fullUrlString?.appendingQueryParameters(route.urlParameters())
         var getRequest = URLRequest(url: fullUrlString!)
-        getRequest.httpMethod = "GET"
         getRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
         getRequest.addValue((user.credential)!, forHTTPHeaderField: "Authorization")
+        
         session.dataTask(with: getRequest) { (data, response, error) in
             
            let statusCode: Int = (response as! HTTPURLResponse).statusCode
