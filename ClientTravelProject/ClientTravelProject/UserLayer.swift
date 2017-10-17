@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-struct Users {
+struct Users: Codable {
     let email: String?
     let password: String?
     let credential: String?
@@ -20,7 +20,7 @@ struct Users {
     }
 }
 
-extension Users: Decodable {
+extension Users {
     enum additionalKeys: String, CodingKey {
         case email
         case password

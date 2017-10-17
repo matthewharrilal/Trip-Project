@@ -153,10 +153,24 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dJF-cJ-G8A">
+                                <rect key="frame" x="127" y="475" width="121" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Add Trip"/>
+                                <connections>
+                                    <action selector="addTripButton:" destination="tpC-2G-0du" eventType="touchUpInside" id="fJc-Gs-Z8U"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <viewLayoutGuide key="safeArea" id="vfO-4b-BO6"/>
                     </view>
+                    <connections>
+                        <outlet property="completedTextField" destination="Gd7-bV-dNz" id="mk2-2L-iTJ"/>
+                        <outlet property="destinationTextField" destination="7KM-sM-735" id="AHi-Iy-qJM"/>
+                        <outlet property="endDateTextField" destination="p1c-Hl-3zx" id="5D6-d5-VFH"/>
+                        <outlet property="startDateTextField" destination="0Bc-KZ-csH" id="iya-tu-qqE"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PJH-Vh-ATk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

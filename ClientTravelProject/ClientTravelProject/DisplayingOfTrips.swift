@@ -14,6 +14,8 @@ class DisplayTrips: UITableViewController {
     var passwordText: String?
     var emailText: String?
     
+    let addTripsInstance = AddTripsViewController()
+    
     var trips: [Trips] = [] {
         didSet {
             DispatchQueue.main.async {
@@ -51,6 +53,14 @@ class DisplayTrips: UITableViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return trips.count
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "addTrips" {
+            let addTripsVC = segue.destination as? AddTripsViewController
+            addTripsVC?.emailText = emailText
+            addTripsVC?.passwordText = passwordText
+        }
     }
     
 }

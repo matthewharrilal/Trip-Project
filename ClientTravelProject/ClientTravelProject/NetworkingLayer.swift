@@ -55,6 +55,25 @@ enum Route {
         }
         
     }
+    
+    func postBody(user: Users? = nil, trip: Trips? = nil) -> Data? {
+        switch self{
+        case .trips():
+            var jsonBody = Data()
+            do {
+                jsonBody = try JSONEncoder().encode(trip)
+            } catch{}
+            return jsonBody
+        case .users():
+            var jsonBody = Data()
+            do {
+                jsonBody = try JSONEncoder().encode(user)
+            } catch {}
+            return jsonBody
+        default:
+            return nil
+        }
+    }
 }
 
 enum differentHttpsMethods: String {
@@ -70,19 +89,26 @@ class UsersNetworkingLayer {
     var baseURL = "http://127.0.0.1:5000"
     
     //    This is the function that determines the path that we are going to be taking the course of
-    func fetch(route: Route, user: Users, requestRoute: differentHttpsMethods , completionHandler: @escaping (Data, Int) -> Void) {
+    func fetch(route: Route, user: Users? = nil, trip: Trips? = nil,requestRoute: differentHttpsMethods, completionHandler: @escaping (Data, Int) -> Void) {
         var fullUrlString = URL(string: baseURL.appending(route.path()))
         fullUrlString?.appendingQueryParameters(route.urlParameters())
         var getRequest = URLRequest(url: fullUrlString!)
         getRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        getRequest.addValue((user.credential)!, forHTTPHeaderField: "Authorization")
+        getRequest.addValue((user?.credential)!, forHTTPHeaderField: "Authorization")
+        if user != nil {
+            getRequest.httpBody = route.postBody(user: user)
+        }
+        if trip != nil{
+            
+            getRequest.httpBody = route.postBody( trip: trip)
+        }
+        
+        getRequest.httpMethod = requestRoute.rawValue
         
         session.dataTask(with: getRequest) { (data, response, error) in
             
            let statusCode: Int = (response as! HTTPURLResponse).statusCode
             if let data = data {
-                print(response)
-                print(data)
                 completionHandler(data, statusCode)
                
             }

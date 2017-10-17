@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 var user: Users?
-struct Trips {
+struct Trips: Codable {
 //    What we are essentially doing here is that we are saying that these are the properties that we want modeled for the data and since we have a non relational database we similarly enforcing a schema
   
     
@@ -39,7 +39,7 @@ struct ArrayTrips: Decodable {
     let tripsList: [Trips]
 }
 
-extension Trips: Decodable {
+extension Trips {
     enum firstLayerKeys: String, CodingKey {
         case email
         case trips
