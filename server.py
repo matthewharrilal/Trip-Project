@@ -241,7 +241,8 @@ class Trips(Resource):
 
         # Now that we have the raw value we have to actually see that
         # it is stored within our database
-        email_find = collection_of_trips.find_one({'email': auth.username})
+        email_find = list(collection_of_trips.find({'email': auth.username}))
+        print(email_find)
         user_password_find = collection_of_posts.find_one({'email': auth.username})
 
 
