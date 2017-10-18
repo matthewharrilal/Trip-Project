@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 
 var user: Users?
+
 struct Trips: Codable {
     //    What we are essentially doing here is that we are saying that these are the properties that we want modeled for the data and since we have a non relational database we similarly enforcing a schema
     
@@ -31,36 +32,29 @@ struct Trips: Codable {
     //    Here we are essentially initalizing a user therefore ever user will have these implementations
 }
 
-struct ArrayTrips: Decodable {
-    let tripsList: [Trips]
-}
-
 extension Trips {
     enum firstLayerKeys: String, CodingKey {
         case email
-    }
-    enum secondLayerKeys: String, CodingKey {
-        case waypointDestination = "waypoint_destination"
-    }
-    
-    
-    enum additionalKeys: String, CodingKey {
         case completed
         case destination
         case startDate = "start_date"
         case endDate = "end_date"
         case waypoint
     }
+    enum secondLayerKeys: String, CodingKey {
+        case waypointDestination = "waypoint_destination"
+    }
+    
+    
     init(from decoder: Decoder) throws {
-   let container = try decoder.container(keyedBy: firstLayerKeys.self)
-    let email = try container.decodeIfPresent(String.self, forKey: .email)
-    let container2 = try decoder.container(keyedBy: additionalKeys.self)
-    let completed = try container2.decodeIfPresent(Bool.self, forKey: .completed)
-    let destination = try container2.decodeIfPresent(String.self, forKey: .destination)
-    let startDate = try container2.decodeIfPresent(String.self, forKey: .startDate)
-    let endDate = try container2.decodeIfPresent(String.self, forKey: .endDate)
-    let waypointContainer = try container2.nestedContainer(keyedBy: secondLayerKeys.self, forKey: .waypoint)
-    let waypointDestination = try waypointContainer.decodeIfPresent(String.self, forKey: .waypointDestination)
-    self.init(email: email, completed: completed, destination: destination, startDate: startDate, endDate: endDate, waypointDestination: waypointDestination)
+        let container = try decoder.container(keyedBy: firstLayerKeys.self)
+        let email = try container.decodeIfPresent(String.self, forKey: .email)
+        let completed = try container.decodeIfPresent(Bool.self, forKey: .completed)
+        let destination = try container.decodeIfPresent(String.self, forKey: .destination)
+        let startDate = try container.decodeIfPresent(String.self, forKey: .startDate)
+        let endDate = try container.decodeIfPresent(String.self, forKey: .endDate)
+        let waypointContainer = try container.nestedContainer(keyedBy: secondLayerKeys.self, forKey: .waypoint)
+        let waypointDestination = try waypointContainer.decodeIfPresent(String.self, forKey: .waypointDestination)
+        self.init(email: email, completed: completed, destination: destination, startDate: startDate, endDate: endDate, waypointDestination: waypointDestination)
     }
 }

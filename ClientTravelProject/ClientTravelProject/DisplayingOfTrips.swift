@@ -30,10 +30,10 @@ class DisplayTrips: UITableViewController {
         super.viewDidLoad()
         let user = Users(email: emailText, password: passwordText)
         networkInstance.fetch(route: Route.trips(), user: user, requestRoute: .getRequest) { (data, responseInt) in
-            let trips0 = try? JSONDecoder().decode(ArrayTrips.self, from: data)
+            let trips0 = try? JSONDecoder().decode([Trips].self, from: data)
             print(trips0)
-            guard let trips1 = trips0?.tripsList else{return}
-            self.trips = trips1
+            
+            self.trips = trips0!
             print("The elements in the array are : \(self.trips)")
             DispatchQueue.main.async {
                 self.tableView.reloadData()
