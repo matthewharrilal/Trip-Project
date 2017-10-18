@@ -44,11 +44,11 @@ enum Route {
         }
     }
     
-    func urlParameters() -> [String: String] {
+    func urlParameters(destination: String? = nil) -> [String: String] {
         switch self {
         case .trips():
-//            let tripsParameters = ["destination": String(describing: destination)]
-            return ["":""]
+            let tripsParameters = ["destination": String(describing: destination)]
+            return tripsParameters
          
         case .users:
             return ["":""]
