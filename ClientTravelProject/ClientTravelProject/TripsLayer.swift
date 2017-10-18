@@ -39,12 +39,9 @@ extension Trips {
         case destination
         case startDate = "start_date"
         case endDate = "end_date"
-        case waypoint
-    }
-    enum secondLayerKeys: String, CodingKey {
         case waypointDestination = "waypoint_destination"
     }
-    
+  
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: firstLayerKeys.self)
@@ -53,8 +50,7 @@ extension Trips {
         let destination = try container.decodeIfPresent(String.self, forKey: .destination)
         let startDate = try container.decodeIfPresent(String.self, forKey: .startDate)
         let endDate = try container.decodeIfPresent(String.self, forKey: .endDate)
-        let waypointContainer = try container.nestedContainer(keyedBy: secondLayerKeys.self, forKey: .waypoint)
-        let waypointDestination = try waypointContainer.decodeIfPresent(String.self, forKey: .waypointDestination)
+        let waypointDestination = try container.decodeIfPresent(String.self, forKey: .waypointDestination)
         self.init(email: email, completed: completed, destination: destination, startDate: startDate, endDate: endDate, waypointDestination: waypointDestination)
     }
 }

@@ -34,13 +34,6 @@ class AddTripsViewController: UIViewController {
         let user = Users(email: emailText, password: passwordText)
         networkInstance.fetch(route: .trips(), user: user, trip: trip,requestRoute: .postRequest) { (data, responseInt) in
             
-            
-            
-//            let jsonDictionary = ["tripsList": ["trips": ["destination": self.destinationTextField.text, "start_date": self.startDateTextField.text,
-//                                                          "end_date": self.endDateTextField.text, "completed": self.completedTextField.text ]]]
-//            let serializedDictionary = try? JSONSerialization.data(withJSONObject: jsonDictionary, options: JSONSerialization.WritingOptions.prettyPrinted)
-            
-            
         }
     }
 }
