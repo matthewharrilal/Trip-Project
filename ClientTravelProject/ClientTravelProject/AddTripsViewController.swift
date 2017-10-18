@@ -29,7 +29,7 @@ class AddTripsViewController: UIViewController {
     }
     @IBAction func addTripButton(_ sender: UIButton) {
         
-        let trip = Trips(email: "", completed: true, destination: destinationTextField.text, startDate: startDateTextField.text, endDate: endDateTextField.text, latitude: "", longitude: "", waypointDestination: "")
+       let trip = Trips(email: emailText, completed: true, destination: destinationTextField.text, startDate: startDateTextField.text, endDate: endDateTextField.text, waypointDestination: "")
         
         let user = Users(email: emailText, password: passwordText)
         networkInstance.fetch(route: .trips(), user: user, trip: trip,requestRoute: .postRequest) { (data, responseInt) in

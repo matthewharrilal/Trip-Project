@@ -241,15 +241,15 @@ class Trips(Resource):
 
         # Now that we have the raw value we have to actually see that
         # it is stored within our database
-        email_find = collection_of_trips.find({'email': auth.username})
+        email_find = collection_of_trips.find_one({'email': auth.username})
         user_password_find = collection_of_posts.find_one({'email': auth.username})
-        json_loads = json.loads(dumps(email_find))
+
 
         # json_email_find = dumps(email_find)
         if bcrypt.checkpw(encoded_password, user_password_find['password']):
             print("The user succesfully fetched their trips")
             # print("The elements in the document array are : %s" %(documents_array))
-            return(json_loads, 200, None)
+            return(json.loads(dumps(email_find)), 200, None)
         else:
             print('The trips can not be found')
             return(None, 401, None)
@@ -307,30 +307,16 @@ class Trips(Resource):
 
         user_account_find = collection_of_posts.find_one({'email': auth.username})
 
-        #  We have to take the edited information from the json body they are sending
-        new_destination = request.json['tripsList'][0]['trips']['destination']
-        print("The new destination is : %s" %(new_destination))
-
-        new_completed = request.json['tripsList'][0]['trips']['completed']
-
-        new_start_date = request.json['tripsList'][0]['trips']['start_date']
-        new_end_date = request.json['tripsList'][0]['trips']['end_date']
-        new_waypoint_destination = request.json['tripsList'][0]['trips']['waypoint']['waypoint_destination']
-        new_latitude = request.json['tripsList'][0]['trips']['waypoint']['location']['latitude']
-        new_longitude = request.json['tripsList'][0]['trips']['waypoint']['location']['longitude']
-        # Now that we have seached for the email we have to check if it exists or not
-        # if trips_query is None:
-        #     print('Couldnot find the document the user is trying to edit')
-        #     return(None, 404, None)
+        new_destination = request.json['tripsList'][0]['destination']
+        new_start_date = request.json['tripsList'][0]['start_date']
+        new_end_date = request.json['tripsList'][0]['end_date']
+        new_waypoint_destination = request.json['tripsList'][0]['waypoint']['waypoint_destination']
         if trips_query is not None and bcrypt.checkpw(encoded_password, user_account_find['password']):
             # So essentially this is the part where we save the changes to our database
-                trips_query['tripsList'][0]['trips']['destination'] = specific_trip
-                trips_query['tripsList'][0]['trips']['completed'] = new_completed
-                trips_query['tripsList'][0]['trips']['start_date'] = new_start_date
-                trips_query['tripsList'][0]['trips']['end_date'] = new_end_date
-                trips_query['tripsList'][0]['trips']['waypoint']['waypoint_destination'] = new_waypoint_destination
-                trips_query['tripsList'][0]['trips']['waypoint']['location']['latitude'] = new_latitude
-                trips_query['tripsList'][0]['trips']['waypoint']['location']['longitude'] = new_longitude
+                trips_query['tripsList'][0]['destination'] = new_destination
+                trips_query['tripsList'][0]['start_date'] = new_start_date
+                trips_query['tripsList'][0]['end_date'] = new_end_date
+                trips_query['tripsList'][0]['waypoint']['waypoint_destination'] = new_waypoint_destination
                 collection_of_trips.save(trips_query)
                 print('The changes to the trip has been saved')
                 return(trips_query, 200, None)

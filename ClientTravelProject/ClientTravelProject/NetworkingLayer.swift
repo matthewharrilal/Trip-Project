@@ -116,6 +116,7 @@ class UsersNetworkingLayer {
             
            let statusCode: Int = (response as! HTTPURLResponse).statusCode
             if let data = data {
+                print(response)
                 completionHandler(data, statusCode)
                
             }
