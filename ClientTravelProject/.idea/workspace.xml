@@ -7,6 +7,7 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ClientTravelProject/Base.lproj/Main.storyboard" afterPath="$PROJECT_DIR$/ClientTravelProject/Base.lproj/Main.storyboard" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ClientTravelProject/LogInViewController.swift" afterPath="$PROJECT_DIR$/ClientTravelProject/LogInViewController.swift" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ClientTravelProject/SignUpViewController.swift" afterPath="$PROJECT_DIR$/ClientTravelProject/SignUpViewController.swift" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../server.py" afterPath="$PROJECT_DIR$/../server.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -198,16 +199,15 @@
       <option name="presentableId" value="Default" />
       <updated>1508110817283</updated>
       <workItem from="1508110820163" duration="2471000" />
-      <workItem from="1508393674561" duration="2114000" />
+      <workItem from="1508393674561" duration="2495000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="7223000" />
+    <option name="totallyTimeSpent" value="7604000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1388889" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
