@@ -4,10 +4,9 @@
     <list default="true" id="3eea12f3-52d6-4021-9944-18b7734e14c7" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ClientTravelProject.xcodeproj/project.xcworkspace/xcuserdata/matthewharrilal.xcuserdatad/UserInterfaceState.xcuserstate" afterPath="$PROJECT_DIR$/ClientTravelProject.xcodeproj/project.xcworkspace/xcuserdata/matthewharrilal.xcuserdatad/UserInterfaceState.xcuserstate" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ClientTravelProject.xcodeproj/project.pbxproj" afterPath="$PROJECT_DIR$/ClientTravelProject.xcodeproj/project.pbxproj" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ClientTravelProject/AddTripsViewController.swift" afterPath="$PROJECT_DIR$/ClientTravelProject/AddTripsViewController.swift" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ClientTravelProject/Base.lproj/Main.storyboard" afterPath="$PROJECT_DIR$/ClientTravelProject/Base.lproj/Main.storyboard" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ClientTravelProject/NetworkingLayer.swift" afterPath="$PROJECT_DIR$/ClientTravelProject/NetworkingLayer.swift" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ClientTravelProject/LogInViewController.swift" afterPath="$PROJECT_DIR$/ClientTravelProject/LogInViewController.swift" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ClientTravelProject/SignUpViewController.swift" afterPath="$PROJECT_DIR$/ClientTravelProject/SignUpViewController.swift" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -22,8 +21,8 @@
       <file leaf-file-name="NetworkingLayer.swift" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ClientTravelProject/NetworkingLayer.swift">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="48">
-              <caret line="19" column="44" lean-forward="false" selection-start-line="19" selection-start-column="44" selection-end-line="19" selection-end-column="44" />
+            <state relative-caret-position="-149">
+              <caret line="66" column="46" lean-forward="false" selection-start-line="66" selection-start-column="46" selection-end-line="66" selection-end-column="46" />
               <folding>
                 <element signature="e#165#182#0" expanded="true" />
               </folding>
@@ -34,8 +33,8 @@
       <file leaf-file-name="SignUpViewController.swift" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ClientTravelProject/SignUpViewController.swift">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="21" column="0" lean-forward="false" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+            <state relative-caret-position="420">
+              <caret line="28" column="24" lean-forward="false" selection-start-line="28" selection-start-column="24" selection-end-line="28" selection-end-column="24" />
               <folding>
                 <element signature="e#112#129#0" expanded="true" />
               </folding>
@@ -56,8 +55,8 @@
       <file leaf-file-name="LogInViewController.swift" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ClientTravelProject/LogInViewController.swift">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="630">
-              <caret line="42" column="18" lean-forward="false" selection-start-line="42" selection-start-column="18" selection-end-line="42" selection-end-column="18" />
+            <state relative-caret-position="660">
+              <caret line="57" column="5" lean-forward="false" selection-start-line="57" selection-start-column="5" selection-end-line="57" selection-end-column="5" />
               <folding />
             </state>
           </provider>
@@ -76,7 +75,7 @@
       <file leaf-file-name="AlertsAndErrors.swift" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ClientTravelProject/AlertsAndErrors.swift">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
+            <state relative-caret-position="135">
               <caret line="9" column="20" lean-forward="false" selection-start-line="9" selection-start-column="20" selection-end-line="9" selection-end-column="20" />
               <folding>
                 <element signature="e#112#129#0" expanded="true" />
@@ -94,9 +93,9 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/ClientTravelProject/AlertsAndErrors.swift" />
-        <option value="$PROJECT_DIR$/ClientTravelProject/LogInViewController.swift" />
         <option value="$PROJECT_DIR$/ClientTravelProject/AddTripsViewController.swift" />
         <option value="$PROJECT_DIR$/ClientTravelProject/NetworkingLayer.swift" />
+        <option value="$PROJECT_DIR$/ClientTravelProject/LogInViewController.swift" />
         <option value="$PROJECT_DIR$/ClientTravelProject/SignUpViewController.swift" />
       </list>
     </option>
@@ -199,12 +198,12 @@
       <option name="presentableId" value="Default" />
       <updated>1508110817283</updated>
       <workItem from="1508110820163" duration="2471000" />
-      <workItem from="1508393674561" duration="1343000" />
+      <workItem from="1508393674561" duration="2114000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="6452000" />
+    <option name="totallyTimeSpent" value="7223000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
@@ -321,9 +320,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/ClientTravelProject/UserLayer.swift">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="12" column="22" lean-forward="false" selection-start-line="12" selection-start-column="22" selection-end-line="12" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/ClientTravelProject/AlertsAndErrors.swift">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
+        <state relative-caret-position="135">
           <caret line="9" column="20" lean-forward="false" selection-start-line="9" selection-start-column="20" selection-end-line="9" selection-end-column="20" />
           <folding>
             <element signature="e#112#129#0" expanded="true" />
@@ -333,8 +340,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ClientTravelProject/LogInViewController.swift">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="630">
-          <caret line="42" column="18" lean-forward="false" selection-start-line="42" selection-start-column="18" selection-end-line="42" selection-end-column="18" />
+        <state relative-caret-position="660">
+          <caret line="57" column="5" lean-forward="false" selection-start-line="57" selection-start-column="5" selection-end-line="57" selection-end-column="5" />
           <folding />
         </state>
       </provider>
@@ -349,26 +356,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ClientTravelProject/NetworkingLayer.swift">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="48">
-          <caret line="19" column="44" lean-forward="false" selection-start-line="19" selection-start-column="44" selection-end-line="19" selection-end-column="44" />
+        <state relative-caret-position="-149">
+          <caret line="66" column="46" lean-forward="false" selection-start-line="66" selection-start-column="46" selection-end-line="66" selection-end-column="46" />
           <folding>
             <element signature="e#165#182#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ClientTravelProject/UserLayer.swift">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="12" column="22" lean-forward="false" selection-start-line="12" selection-start-column="22" selection-end-line="12" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ClientTravelProject/SignUpViewController.swift">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="21" column="0" lean-forward="false" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+        <state relative-caret-position="420">
+          <caret line="28" column="24" lean-forward="false" selection-start-line="28" selection-start-column="24" selection-end-line="28" selection-end-column="24" />
           <folding>
             <element signature="e#112#129#0" expanded="true" />
           </folding>

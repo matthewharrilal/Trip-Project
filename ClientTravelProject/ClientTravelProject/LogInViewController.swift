@@ -54,7 +54,7 @@ override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         displayTripsVC?.emailText = emailTextField.text
         print(displayTripsVC?.emailText)
         print(displayTripsVC?.passwordText)
-        
+
     }
 }
 }

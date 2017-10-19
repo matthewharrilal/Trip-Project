@@ -7,10 +7,14 @@ import Foundation
 import UIKit
 
 class SignUpViewController: UIViewController {
+    // So essentially this view controller will serve as our sign up from what the name implies
+
     //UIElements
     
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
+    var networkInstance = UsersNetworkingLayer()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,5 +24,10 @@ class SignUpViewController: UIViewController {
         super.didReceiveMemoryWarning()
 
 
+    }
+    @IBAction func signUpButton(_ sender: Any) {
+        let user = Users(email: emailTextField.text, password: passwordTextField.text)
+        networkInstance.fetch(route: Route.users(), user: user, requestRoute: .postRequest) { (data, responseInt) in
+        }
     }
 }
