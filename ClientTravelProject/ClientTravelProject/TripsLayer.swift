@@ -15,12 +15,12 @@ struct Trips: Codable {
     //    What we are essentially doing here is that we are saying that these are the properties that we want modeled for the data and since we have a non relational database we similarly enforcing a schema
     
     
-    let email: String?
-    let completed: Bool?
-    let destination:String?
-    let startDate: String?
-    let endDate: String?
-    let waypointDestination: String?
+    var email: String?
+    var completed: Bool?
+    var destination:String?
+    var startDate: String?
+    var endDate: String?
+    var waypointDestination: String?
     init(email:String?, completed: Bool?, destination: String?, startDate: String?, endDate: String?, waypointDestination: String?) {
         self.email = email
         self.completed = completed

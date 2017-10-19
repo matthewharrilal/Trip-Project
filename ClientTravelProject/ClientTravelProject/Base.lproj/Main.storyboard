@@ -161,6 +161,14 @@
                                     <action selector="addTripButton:" destination="tpC-2G-0du" eventType="touchUpInside" id="fJc-Gs-Z8U"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kPT-Tj-c8c">
+                                <rect key="frame" x="164" y="533" width="46" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <segue destination="wEO-nn-cI9" kind="show" id="bGc-0E-JBQ"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <viewLayoutGuide key="safeArea" id="vfO-4b-BO6"/>
@@ -170,6 +178,7 @@
                         <outlet property="destinationTextField" destination="7KM-sM-735" id="AHi-Iy-qJM"/>
                         <outlet property="endDateTextField" destination="p1c-Hl-3zx" id="5D6-d5-VFH"/>
                         <outlet property="startDateTextField" destination="0Bc-KZ-csH" id="iya-tu-qqE"/>
+                        <segue destination="wEO-nn-cI9" kind="show" identifier="addedFriends" id="4Di-45-bL4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PJH-Vh-ATk" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -195,4 +204,7 @@
             <point key="canvasLocation" x="-298" y="32"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="Vpp-t4-iNN"/>
+    </inferredMetricsTieBreakers>
 </document>

@@ -26,8 +26,8 @@ class DisplayTrips: UITableViewController {
     
     let networkInstance = UsersNetworkingLayer()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
         let user = Users(email: emailText, password: passwordText)
         networkInstance.fetch(route: Route.trips(), user: user, requestRoute: .getRequest) { (data, responseInt) in
             let trips0 = try? JSONDecoder().decode([Trips].self, from: data)
@@ -40,7 +40,6 @@ class DisplayTrips: UITableViewController {
             }
         }
     }
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
