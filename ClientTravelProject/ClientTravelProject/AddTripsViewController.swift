@@ -33,20 +33,8 @@ class AddTripsViewController: UIViewController {
         
         let user = Users(email: emailText, password: passwordText)
         networkInstance.fetch(route: .trips(), user: user, trip: trip,requestRoute: .postRequest) { (data, responseInt) in
-            
+
         }
-        //r self.performSegue(withIdentifier: "addedFriends", sender: nil)
     }
-    
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == "addedFriends" {
-//            let displayTripsVC = segue.destination as! DisplayTrips
-//            DispatchQueue.main.async {
-//                var trips = Trips(email: self.emailText, completed: true, destination: self.destinationTextField.text, startDate: self.startDateTextField.text, endDate: self.endDateTextField.text, waypointDestination: "")
-//                trips.destination = self.destinationTextField.text
-//                displayTripsVC.trips.append(trips)
-//            }
-//        }
-//    }
  
 }

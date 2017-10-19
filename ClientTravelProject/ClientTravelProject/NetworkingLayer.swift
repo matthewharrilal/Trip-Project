@@ -16,6 +16,9 @@ let session = URLSession.shared
 //var user: Users?
 
 struct BasicAuth {
+//    What this struct essentially does is that it generates the authentication header when we are sending resources as well as other http methods this essentially serves
+// as sanitization code or a helper function
+
     static func generateBasicAuthHeader(username: String, password: String) -> String {
         let loginString = String(format: "%@:%@", username, password)
         let loginData: Data = loginString.data(using: String.Encoding.utf8)!
