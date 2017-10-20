@@ -90,9 +90,7 @@ enum differentHttpsMethods: String {
 
 class UsersNetworkingLayer {
     //    We shall be performing our network requests in this class
-    
     var baseURL = "http://127.0.0.1:5000"
-    
     //    This is the function that determines the path that we are going to be taking the course of
     func fetch(route: Route, user: Users? = nil, trip: Trips? = nil,requestRoute: differentHttpsMethods, completionHandler: @escaping (Data, Int) -> Void) {
         var fullUrlString = URL(string: baseURL.appending(route.path()))
@@ -104,7 +102,6 @@ class UsersNetworkingLayer {
             getRequest.httpBody = route.postBody(user: user)
         }
         if trip != nil{
-            
             getRequest.httpBody = route.postBody( trip: trip)
         }
         
@@ -112,7 +109,7 @@ class UsersNetworkingLayer {
         
         session.dataTask(with: getRequest) { (data, response, error) in
             
-           let statusCode: Int = (response as! HTTPURLResponse).statusCode
+            let statusCode: Int = (response as! HTTPURLResponse).statusCode
             if let data = data {
                 print(response)
                 completionHandler(data, statusCode)
