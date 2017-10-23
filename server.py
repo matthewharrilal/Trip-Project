@@ -13,8 +13,8 @@ from basicauth import decode
 from bson.json_util import dumps
 
 app = Flask(__name__)
-client = MongoClient('mongodb://localhost:27017/')
-database = app.db = client.trip_planner_development
+client = MongoClient('mongodb://matthewharrilal:Latchman1@ds053160.mlab.com:53160/trip_planner_matthew')
+database = app.db = client.trip_planner_matthew
 rounds = app.bcrypt_rounds = 5
 api = Api(app)
 
@@ -22,7 +22,6 @@ api = Api(app)
 def authenticated_request(func):
     def wrapper(*args, **kwargs):
         auth = request.authorization
-
         auth_code = request.headers['authorization']
         email, password = decode(auth_code)
         if email is not None and password is not None:
@@ -136,6 +135,7 @@ class User(Resource):
         # pdb.set_trace()
         # Therefore first we have to find the document
         collection_of_posts = database.posts
+        collection_of_trips = database.trips
         # Since we are deleting the user we have to delete the trips that correspond to the email
 
         # collection_of_trips = database.trips
@@ -144,13 +144,14 @@ class User(Resource):
 
         # Now that we have the email we can delete it using a general query
         user_query = collection_of_posts.find_one({'email': auth.username})
-        trips_query = collection_of_trips.find_one({'email': auth.username})
+        pdb.set_trace()
+        trips_query = collection_of_trips.find({'email': auth.username})
 
         # Now we can delete the resources
         if user_query is not None:
                 collection_of_posts.remove(user_query)
                 user_query.pop('password')
-                collection_of_trips.remove(trips_query)
+                collection_of_trips.remove(json.loads(dumps(trips_query)))
                 print('The user and their trips have successfully been deleted')
                 return(user_query, 204, None)
         else:
