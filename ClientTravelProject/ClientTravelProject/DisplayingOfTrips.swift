@@ -28,7 +28,7 @@ class DisplayTrips: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        let user = Users(email: emailText, password: passwordText)
+        let user = Users(email: emailText, password: passwordText, username: "")
         networkInstance.fetch(route: Route.trips(), user: user, requestRoute: .getRequest) { (data, responseInt) in
             let trips0 = try? JSONDecoder().decode([Trips].self, from: data)
             print(trips0)

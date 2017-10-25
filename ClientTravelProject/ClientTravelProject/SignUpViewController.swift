@@ -11,6 +11,7 @@ class SignUpViewController: UIViewController {
 
     //UIElements
     
+    @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     var networkInstance = UsersNetworkingLayer()
@@ -26,7 +27,7 @@ class SignUpViewController: UIViewController {
 
     }
     @IBAction func signUpButton(_ sender: Any) {
-        let user = Users(email: emailTextField.text, password: passwordTextField.text)
+        let user = Users(email: emailTextField.text, password: passwordTextField.text, username: usernameTextField.text)
         networkInstance.fetch(route: Route.users(), user: user, requestRoute: .postRequest) { (data, responseInt) in
         }
     }

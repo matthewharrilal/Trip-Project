@@ -31,7 +31,7 @@ class AddTripsViewController: UIViewController {
         
        let trip = Trips(email: emailText, completed: true, destination: destinationTextField.text, startDate: startDateTextField.text, endDate: endDateTextField.text, waypointDestination: "")
         
-        let user = Users(email: emailText, password: passwordText)
+        let user = Users(email: emailText, password: passwordText, username: "")
         networkInstance.fetch(route: .trips(), user: user, trip: trip,requestRoute: .postRequest) { (data, responseInt) in
 
         }

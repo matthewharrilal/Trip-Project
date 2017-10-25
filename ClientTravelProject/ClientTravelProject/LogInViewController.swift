@@ -31,7 +31,7 @@ class LogInViewController: UIViewController {
     
     @IBAction func logInAction(_ sender: Any) {
         
-        let user = Users(email: emailTextField.text!, password: passwordTextField.text!)
+        let user = Users(email: emailTextField.text!, password: passwordTextField.text!, username: "")
         networkingInstance.fetch(route: Route.users(), user: user, requestRoute: differentHttpsMethods.getRequest) { (data, responseInt) in
             if responseInt == 200 {
                 print("Granted Entry")

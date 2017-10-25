@@ -92,6 +92,13 @@
                                     <action selector="signUpButton:" destination="MJa-bN-saZ" eventType="touchUpInside" id="uqc-K2-PO6"/>
                                 </connections>
                             </button>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="63Y-Mn-cH7">
+                                <rect key="frame" x="86" y="312" width="174" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <viewLayoutGuide key="safeArea" id="SNX-r7-SAO"/>
@@ -99,6 +106,7 @@
                     <connections>
                         <outlet property="emailTextField" destination="oFM-tI-rJe" id="98o-55-wto"/>
                         <outlet property="passwordTextField" destination="BRF-OU-Id6" id="huO-H2-71b"/>
+                        <outlet property="usernameTextField" destination="63Y-Mn-cH7" id="0Gs-PY-6CR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="br5-m9-pwe" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -248,7 +256,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Orb-Kj-GSl"/>
         <segue reference="4Di-45-bL4"/>
     </inferredMetricsTieBreakers>
 </document>
