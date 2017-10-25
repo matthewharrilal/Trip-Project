@@ -12,6 +12,7 @@ import UIKit
 struct Users: Codable {
     let email: String?
     let password: String?
+
     let credential: String?
     init(email: String?, password: String?) {
         self.email = email

@@ -66,7 +66,7 @@ class User(Resource):
         print(hashed)
         # So it is hashing the password therefore we have to find a way to insert this as the password instead of reg string as the password
 
-        if 'email' in requested_json and 'password' in requested_json:
+        if 'email' in requested_json and 'password' in requested_json and 'username' in requested_json:
             collection_of_posts.insert_one(requested_json)
             requested_json.pop('password')
 
