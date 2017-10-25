@@ -66,7 +66,7 @@ class User(Resource):
         print(hashed)
         # So it is hashing the password therefore we have to find a way to insert this as the password instead of reg string as the password
 
-        if 'email' in requested_json and 'password' in requested_json:
+        if 'email' in requested_json and 'password' in requested_json and 'username' in requested_json:
             collection_of_posts.insert_one(requested_json)
             requested_json.pop('password')
 
@@ -111,7 +111,7 @@ class User(Resource):
 
         auth = request.authorization
 
-        user_email = request.json.get('email')
+        user_username = request.json.get('username')
         # We now have to locate the document with the specific problems
         user_query = collection_of_posts.find_one({'email': auth.username})
         # So now we essentially have access to all the documents with emails in them
@@ -122,7 +122,7 @@ class User(Resource):
             print('Invalid documents sorry!')
             return(None, 404, None)
         elif user_query is not None:
-            user_query['email'] = user_email
+            user_query['username'] = username
             collection_of_posts.save(user_query)
             print('The documents have been edited')
             return(user_query, 200, None)
