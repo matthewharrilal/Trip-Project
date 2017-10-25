@@ -274,8 +274,9 @@ class Trips(Resource):
 
         # First we have to find the document they want to edit
         auth = request.authorization
-        trips_query = collection_of_trips.find_one({'email': auth.username})
         specific_trip = request.args.get("destination")
+        trips_query = collection_of_trips.find_one({'destination': specific_trip})
+
         # specific_trip_query = collection_of_trips.find_one({'destination': specific_trip})
 
         encoded_password = auth.password.encode('utf-8')
