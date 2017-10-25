@@ -144,14 +144,13 @@ class User(Resource):
 
         # Now that we have the email we can delete it using a general query
         user_query = collection_of_posts.find_one({'email': auth.username})
-        pdb.set_trace()
-        trips_query = collection_of_trips.find({'email': auth.username})
+        trips_query = list(collection_of_trips.find({'email': auth.username}))
 
         # Now we can delete the resources
         if user_query is not None:
                 collection_of_posts.remove(user_query)
-                user_query.pop('password')
                 collection_of_trips.remove(json.loads(dumps(trips_query)))
+                user_query.pop('password')
                 print('The user and their trips have successfully been deleted')
                 return(user_query, 204, None)
         else:
