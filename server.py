@@ -66,16 +66,13 @@ class User(Resource):
         print(hashed)
         # So it is hashing the password therefore we have to find a way to insert this as the password instead of reg string as the password
 
-        if 'email' in requested_json and 'password' in requested_json and 'username' in requested_json:
+        if 'email' in requested_json and 'password' in requested_json:
             collection_of_posts.insert_one(requested_json)
             requested_json.pop('password')
 
             print('The document has been implemented')
             # pdb.set_trace()
             return(requested_json, 201, None)
-        else:
-            print('This document could not be inserted into our database')
-            return(None, 404, None)
 
     @authenticated_request
     def get(self):
@@ -95,10 +92,6 @@ class User(Resource):
                 user_find.pop('password')
                 print('The user has successfully signed in')
                 return(user_find, 200, None)
-            else:
-                print('The user cannot be found')
-                return(None, 401, None)
-
     @authenticated_request
     def put(self):
         # This function is what essentially edits the resources
@@ -115,13 +108,7 @@ class User(Resource):
         # We now have to locate the document with the specific problems
         user_query = collection_of_posts.find_one({'email': auth.username})
         # So now we essentially have access to all the documents with emails in them
-        if user_query is None:
-            '''Some simple user querying to see if the documents we actually
-            are checking contain any information essentially some simple error
-            handling'''
-            print('Invalid documents sorry!')
-            return(None, 404, None)
-        elif user_query is not None:
+        if user_query is not None:
             user_query['username'] = username
             collection_of_posts.save(user_query)
             print('The documents have been edited')
@@ -153,10 +140,6 @@ class User(Resource):
                 user_query.pop('password')
                 print('The user and their trips have successfully been deleted')
                 return(user_query, 204, None)
-        else:
-            print('The user could not be found to be deleted')
-            return(None, 404, None)
-
 
     @authenticated_request
     def patch(self):
@@ -179,10 +162,7 @@ class User(Resource):
         user_query = collection_of_posts.find_one({'email': auth.username})
 
         # Now we implement the error handling
-        if user_query is None:
-            print('Sorry the document could not be found, therefore could not be patched')
-            return(None, 404, None)
-        else:
+        if user_query is not None:
             user_query['email'] = edited_user_email
             user_query['username'] = user_username
             user_query['password'] = user_password
@@ -224,9 +204,6 @@ class Trips(Resource):
             collection_of_trips.insert_one(requested_json)
             print('The document does have an email address in it')
             return(requested_json, 201, None)
-        else:
-            print("The document did not contain the email")
-            return(None, 404, None)
 
     @authenticated_request
     def get(self):
@@ -251,9 +228,9 @@ class Trips(Resource):
             print("The user succesfully fetched their trips")
             # print("The elements in the document array are : %s" %(documents_array))
             return(json.loads(dumps(email_find)), 200, None)
-        else:
-            print('The trips can not be found')
-            return(None, 401, None)
+        # else:
+        #     print('The trips can not be found')
+        #     return(None, 401, None)
 
     @authenticated_request
     def delete(self):
@@ -276,10 +253,7 @@ class Trips(Resource):
         removed_destination = collection_of_trips.find_one({'destination': trips_destination})
 
         # Now that we are in the proccess of finding it we have to confirm if the document actually exists
-        if trips_email is None:
-            print('The document you are trying to delete does not exist')
-            return(None, 404, None)
-        elif trips_email is not None and bcrypt.checkpw(encoded_password, user_account_find['password']) and removed_destination is not None:
+        if trips_email is not None and bcrypt.checkpw(encoded_password, user_account_find['password']) and removed_destination is not None:
             removed_trip = collection_of_trips.remove(removed_destination)
             print('The trip has been removed')
             return(removed_trip, 204, None)
@@ -321,11 +295,6 @@ class Trips(Resource):
                 collection_of_trips.save(trips_query)
                 print('The changes to the trip has been saved')
                 return(trips_query, 200, None)
-        else:
-
-            print('Couldnot find the document the user is trying to edit')
-            return(None, 404, None)
-
     # def patch(self):
         # This is essentially the function where we patch resources
         # First things first we need access to the collection
